@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tickster.Api", "Tickster.Api\Tickster.Api.csproj", "{F8D63CC4-709E-4C50-90A1-E85444FE7340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicksterSampleApp.TicksterConsole", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.TicksterConsole.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8D63CC4-709E-4C50-90A1-E85444FE7340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D63CC4-709E-4C50-90A1-E85444FE7340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D63CC4-709E-4C50-90A1-E85444FE7340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D63CC4-709E-4C50-90A1-E85444FE7340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
