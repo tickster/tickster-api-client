@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tickster.Api", "Tickster.Api\Tickster.Api.csproj", "{F8D63CC4-709E-4C50-90A1-E85444FE7340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tickster.Api", "Tickster.Api\Tickster.Api.csproj", "{F8D63CC4-709E-4C50-90A1-E85444FE7340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicksterSampleApp.TicksterConsole", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.TicksterConsole.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.TicksterConsole", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.TicksterConsole.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicksterSampleApp.Infrastructure", "TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj", "{336B6BD6-9E07-4361-B865-D3DB39F03855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tickster.Api.Test", "Tickster.Api.Test\Tickster.Api.Test.csproj", "{B3570400-200C-4C5E-96D5-65FC5615CBFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +25,19 @@ Global
 		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{336B6BD6-9E07-4361-B865-D3DB39F03855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336B6BD6-9E07-4361-B865-D3DB39F03855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336B6BD6-9E07-4361-B865-D3DB39F03855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336B6BD6-9E07-4361-B865-D3DB39F03855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B04C01C9-EE6E-4D1F-BB8F-35DAFEEC97EC}
 	EndGlobalSection
 EndGlobal
