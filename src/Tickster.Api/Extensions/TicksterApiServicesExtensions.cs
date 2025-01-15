@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 namespace Tickster.Api.Extensions;
 public static class TicksterApiServicesExtensions
 {
-    public static IServiceCollection AddTicksterApi(this IServiceCollection services, Action<TicksterOptions> configureOptions)
+    public static IServiceCollection AddTicksterClient(this IServiceCollection services, Action<TicksterOptions> configureOptions)
     {
         services.Configure(configureOptions);
         services.AddSingleton<TicksterClientFactory>(provider =>
