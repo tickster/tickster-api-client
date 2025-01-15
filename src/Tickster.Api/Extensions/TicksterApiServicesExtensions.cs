@@ -7,6 +7,7 @@ public static class TicksterApiServicesExtensions
     public static IServiceCollection AddTicksterClient(this IServiceCollection services, Action<TicksterOptions> configureOptions)
     {
         services.Configure(configureOptions);
+        services.AddHttpClient();
         services.AddSingleton<TicksterClientFactory>(provider =>
         {
             var options = provider.GetRequiredService<IOptions<TicksterOptions>>();
