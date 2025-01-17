@@ -64,7 +64,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
     private string GetApiKey()
         => HttpClient.DefaultRequestHeaders.GetValues("x-api-key").FirstOrDefault("");
 
-    private static async Task<TicksterResponseError> CreateExceptionFromResponse(HttpResponseMessage response, Exception originalException)
+    private static async Task<TicksterApiError> CreateExceptionFromResponse(HttpResponseMessage response, Exception originalException)
     {
         var content = await response.Content.ReadAsStringAsync();
 
@@ -86,12 +86,12 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
             }
             catch (JsonException)
             {
-                return new TicksterResponseError("Unknown response format", originalException);
+                return new TicksterApiError("Unknown response format", originalException);
             }
         }
     }
 
-    private static TicksterResponseError BuildRequestException(ErrorResponse response, Exception e)
+    private static TicksterApiError BuildRequestException(ErrorResponse response, Exception e)
         => new(response.Title, e)
         {
             Type = response.Type,
@@ -105,7 +105,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
                 response.AdditionalProp3]
         };
 
-    private static TicksterResponseError BuildRequestException(CrmErrorResponse response, Exception e)
+    private static TicksterApiError BuildRequestException(CrmErrorResponse response, Exception e)
         => new(response.Error, e)
         {
             Title = response.Error

@@ -2,7 +2,7 @@
 using Tickster.Api.Dtos;
 
 namespace Tickster.Api.Exceptions;
-public class TicksterResponseError : Exception
+public class TicksterApiError : Exception
 {
 
     public string Type { get; set; } = string.Empty;
@@ -12,11 +12,11 @@ public class TicksterResponseError : Exception
     public int Status { get; set; }
     public string[] AdditionalProperties { get; set; } = [];
 
-    public TicksterResponseError(string message) : base(message)
+    public TicksterApiError(string message) : base(message)
     {
     }
 
-    public TicksterResponseError(string message, Exception innerException) : base(message, innerException)
+    public TicksterApiError(string message, Exception innerException) : base(message, innerException)
     {
     }
 }
