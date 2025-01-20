@@ -14,7 +14,7 @@ public class Goods
     public string ArticleNumber { get; set; } = string.Empty;
     public decimal PriceIncVatAfterDiscount { get; set; }
     public decimal VatPortion { get; set; }
-    public int VatPercent { get; set; }
+    public decimal VatPercent { get; set; }
     public int EventId { get; set; }
     public string Section { get; set; } = string.Empty;
     public int Seat { get; set; }

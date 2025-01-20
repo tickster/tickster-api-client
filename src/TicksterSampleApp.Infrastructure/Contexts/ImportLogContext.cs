@@ -10,6 +10,6 @@ public partial class SampleAppContext : DbContext
     private void OnModelCreatingImportLog(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ImportLog>()
-            .HasKey(il => new { il.TicksterCrmId, il.Date });
+            .HasKey(il => new { il.LastTicksterCrmId, il.Date });
     }
 }

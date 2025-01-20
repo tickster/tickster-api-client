@@ -77,12 +77,12 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                 name: "ImportLog",
                 columns: table => new
                 {
-                    TicksterCrmId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LastTicksterCrmId = table.Column<int>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImportLog", x => new { x.TicksterCrmId, x.Date });
+                    table.PrimaryKey("PK_ImportLog", x => new { x.LastTicksterCrmId, x.Date });
                 });
 
             migrationBuilder.CreateTable(
@@ -176,9 +176,9 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     ReceiptText = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     ArticleNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    PriceIncVatAfterDiscount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PriceIncVatAfterDiscount = table.Column<decimal>(type: "TEXT", precision: 10, scale: 2, nullable: false),
                     VatPortion = table.Column<decimal>(type: "TEXT", nullable: false),
-                    VatPercent = table.Column<int>(type: "INTEGER", nullable: false),
+                    VatPercent = table.Column<decimal>(type: "TEXT", nullable: false),
                     EventId = table.Column<int>(type: "INTEGER", nullable: false),
                     Section = table.Column<string>(type: "TEXT", nullable: false),
                     Seat = table.Column<int>(type: "INTEGER", nullable: false),

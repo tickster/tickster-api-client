@@ -2,6 +2,6 @@
 
 public class ImportLog
 {
-    public int TicksterCrmId { get; set; }
+    public int LastTicksterCrmId { get; set; }
     public DateTime Date { get; set; } = new();
 }

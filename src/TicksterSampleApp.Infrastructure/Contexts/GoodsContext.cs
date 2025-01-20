@@ -20,5 +20,9 @@ public partial class SampleAppContext : DbContext
             .WithMany(e => e.Goods)
             .HasForeignKey(g => g.EventId)
             .HasPrincipalKey(e => e.Id);
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.PriceIncVatAfterDiscount)
+            .HasPrecision(10, 2);
     }
 }

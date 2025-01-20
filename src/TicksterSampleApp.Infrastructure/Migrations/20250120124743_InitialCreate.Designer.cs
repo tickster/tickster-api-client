@@ -11,7 +11,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 namespace TicksterSampleApp.Infrastructure.Migrations
 {
     [DbContext(typeof(SampleAppContext))]
-    [Migration("20250120095133_InitialCreate")]
+    [Migration("20250120124743_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -186,6 +186,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("PriceIncVatAfterDiscount")
+                        .HasPrecision(10, 2)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PurchaseId")
@@ -211,8 +212,8 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("VatPercent")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("VatPercent")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("VatPortion")
                         .HasColumnType("TEXT");
@@ -230,13 +231,13 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.ImportLog", b =>
                 {
-                    b.Property<int>("TicksterCrmId")
+                    b.Property<int>("LastTicksterCrmId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TicksterCrmId", "Date");
+                    b.HasKey("LastTicksterCrmId", "Date");
 
                     b.ToTable("ImportLog");
                 });
