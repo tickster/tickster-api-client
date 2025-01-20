@@ -25,18 +25,22 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("ActivationCode")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterCampaignId")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterCommunicationId")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterInternalReference")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -52,26 +56,32 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
+                        .HasMaxLength(2)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("IdNumber")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsCompany")
@@ -79,26 +89,32 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MobilePhone")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostalAddressLineOne")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostalAddressLineTwo")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterUserRefNo")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -123,10 +139,12 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProductionName")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Start")
@@ -134,10 +152,12 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("TicksterEventId")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterProductionId")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("VenueId")
@@ -156,6 +176,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("ArticleNumber")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("CanBePlacedAtTable")
@@ -166,10 +187,12 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("GoodsId")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("PartOfSeasonToken")
@@ -177,6 +200,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("PartOfSeasonTokenGoodsId")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("PartOfTableReservation")
@@ -204,15 +228,19 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("Section")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("VatPercent")
+                        .HasPrecision(10, 2)
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("VatPortion")
+                        .HasPrecision(10, 2)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -248,14 +276,16 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<int>("CampaignId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Channel")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Currency")
                         .IsRequired()
+                        .HasMaxLength(3)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CustomerId")
@@ -263,14 +293,17 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("DiscountCode")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DiscountCodeName")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EogRequestCode")
                         .IsRequired()
+                        .HasMaxLength(15)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("LastUpdated")
@@ -278,21 +311,26 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("PrivacyRefNo")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TermsRefNo")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterCrmId")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterPurchaseRefNo")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("ToBePaidInRestaurantSystem")
@@ -315,6 +353,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("RestaurantName")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("VenueId")
@@ -335,32 +374,40 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
+                        .HasMaxLength(2)
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Latitude")
+                        .HasPrecision(8, 6)
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Longitude")
+                        .HasPrecision(9, 6)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TicksterVenueId")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
