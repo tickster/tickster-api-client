@@ -3,5 +3,10 @@
 namespace Tickster.Api.Dtos;
 internal class CrmPurchaseLogResponse
 {
-    public IEnumerable<Purchase> Purchases { get; set; } = [];
+    public IEnumerable<PurchaseWrapper> Purchases { get; set; } = [];
+}
+
+internal class PurchaseWrapper
+{
+    public Purchase Purchase { get; set; } = new();
 }

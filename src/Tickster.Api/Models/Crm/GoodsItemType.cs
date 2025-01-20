@@ -1,5 +1,5 @@
 ﻿namespace Tickster.Api.Models.Crm;
-public enum CartItemType
+public enum GoodsItemType
 {
     Undefined,
     Ticket,

@@ -1,12 +1,11 @@
 ﻿using System.Net;
 using System.Text.Json;
-using System.Web;
 using Tickster.Api.Dtos;
 using Tickster.Api.Exceptions;
 
 namespace Tickster.Api;
 
-public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
+public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITicksterHttpAgent
 {
     public HttpClient HttpClient => client;
     private readonly string _eogRequestCode = eogRequestCode ?? string.Empty;
@@ -44,7 +43,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
         }
         catch (HttpRequestException ex)
         {
-            switch(ex.StatusCode)
+            switch (ex.StatusCode)
             {
                 case HttpStatusCode.TooManyRequests:
                     // FIXME: Handle backoff
@@ -100,8 +99,8 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
             Instance = response.Instance,
             Status = response.Status,
             AdditionalProperties = [
-                response.AdditionalProp1, 
-                response.AdditionalProp2, 
+                response.AdditionalProp1,
+                response.AdditionalProp2,
                 response.AdditionalProp3]
         };
 
@@ -110,32 +109,4 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode)
         {
             Title = response.Error
         };
-}
-
-public class SearchQuery
-{
-    public int Take { get; set; } = 10;
-    public int Skip { get; set; } = 0;
-    public string? Search { get; set; }
-    public string? Prefix { get; set; }
-    public string? Filter { get; set; }
-
-    public string ToQueryString()
-    {
-        var query = HttpUtility.ParseQueryString(string.Empty);
-        query["take"] = Take.ToString();
-        query["skip"] = Skip.ToString();
-
-        if (!string.IsNullOrWhiteSpace(Search))
-        {
-            query["query"] = Search;
-
-            if (!string.IsNullOrWhiteSpace(Prefix) && !string.IsNullOrWhiteSpace(Filter))
-            {
-                query["query"] += $" {Prefix}:{Filter}";
-            }
-        }
-
-        return query.ToString() ?? string.Empty;
-    }
 }
