@@ -10,3 +10,6 @@ From the console project run the following to create a new migration
 To update the database run the following
 
 `dotnet ef database update -p ..\TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj`
+
+On a windows machine, the Sqlite database file is created at (SqliteDbName configured in appsettings)
+`C:\Users\<user>\AppData\Local\<SqliteDbName>`
