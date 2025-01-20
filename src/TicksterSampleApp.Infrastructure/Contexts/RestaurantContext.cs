@@ -14,5 +14,9 @@ public partial class SampleAppContext : DbContext
             .WithOne(g => g.Restaurant)
             .HasForeignKey(p => p.RestaurantId)
             .HasPrincipalKey(r => r.Id);
+
+        modelBuilder.Entity<Restaurant>()
+            .Property(r => r.RestaurantName)
+            .HasMaxLength(255);
     }
 }

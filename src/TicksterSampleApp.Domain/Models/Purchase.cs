@@ -1,4 +1,6 @@
-﻿namespace TicksterSampleApp.Domain.Models;
+﻿using TicksterSampleApp.Domain.Enums;
+
+namespace TicksterSampleApp.Domain.Models;
 
 public class Purchase
 {
@@ -10,11 +12,11 @@ public class Purchase
     public int CustomerId { get; set; }
     public int CampaignId { get; set; }
     public string TicksterPurchaseRefNo { get; set; } = string.Empty;
-    public int Status { get; set; }
+    public Status Status { get; set; }
     public DateTime Created { get; set; } = new();
     public DateTime LastUpdated { get; set; } = new();
     public string Currency { get; set; } = string.Empty;
-    public int Channel { get; set; }
+    public Channel Channel { get; set; }
     public bool ToBePaidInRestaurantSystem { get; set; }
     public string DiscountCodeName { get; set; } = string.Empty;
     public string DiscountCode { get; set; } = string.Empty;

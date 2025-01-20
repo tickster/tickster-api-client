@@ -14,5 +14,37 @@ public partial class SampleAppContext : DbContext
             .WithOne(r => r.Venue)
             .HasForeignKey(r => r.VenueId)
             .HasPrincipalKey(v => v.Id);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.TicksterVenueId)
+            .HasMaxLength(20);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.Name)
+            .HasMaxLength(255);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.Address)
+            .HasMaxLength(255);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.ZipCode)
+            .HasMaxLength(20);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.City)
+            .HasMaxLength(100);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.CountryCode)
+            .HasMaxLength(2);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.Latitude)
+            .HasPrecision(8, 6);
+
+        modelBuilder.Entity<Venue>()
+            .Property(v => v.Longitude)
+            .HasPrecision(9, 6);
     }
 }

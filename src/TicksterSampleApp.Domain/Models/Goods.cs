@@ -1,4 +1,6 @@
-﻿namespace TicksterSampleApp.Domain.Models;
+﻿using TicksterSampleApp.Domain.Enums;
+
+namespace TicksterSampleApp.Domain.Models;
 
 public class Goods
 {
@@ -10,7 +12,7 @@ public class Goods
     public int PurchaseId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string ReceiptText { get; set; } = string.Empty;
-    public int Type { get; set; }
+    public GoodsType Type { get; set; }
     public string ArticleNumber { get; set; } = string.Empty;
     public decimal PriceIncVatAfterDiscount { get; set; }
     public decimal VatPortion { get; set; }
