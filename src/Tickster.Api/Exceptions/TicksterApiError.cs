@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Tickster.Api.Dtos;
-
-namespace Tickster.Api.Exceptions;
+﻿namespace Tickster.Api.Exceptions;
 public class TicksterApiError : Exception
 {
 

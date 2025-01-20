@@ -10,9 +10,9 @@ public class Purchase
     public PurchaseStatus Status { get; set; } = PurchaseStatus.Undefined;
     public string Currency { get; set; } = string.Empty;
     public Channel Channel { get; set; } = Channel.Undefined;
-    public List<CartItem> CartItems { get; set; } = [];
-    public List<Event> EventInfo { get; set; } = [];
-    public string TpuUserRefno { get; set; } = string.Empty;
+    public List<GoodsItem> Goods { get; set; } = [];
+    public List<Event> Events { get; set; } = [];
+    public string UserRefNo { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string PostalAddressLineOne { get; set; } = string.Empty;
@@ -26,11 +26,11 @@ public class Purchase
     public bool IsCompany { get; set; }
     public string CompanyName { get; set; } = string.Empty;
     public bool AcceptInfo { get; set; }
-    public string TermsAgreementRefno { get; set; } = string.Empty;
-    public string PrivacyAgreementRefno { get; set; } = string.Empty;
+    public string TermsRefNo { get; set; } = string.Empty;
+    public string PrivacyRefNo { get; set; } = string.Empty;
     public string BookingPaymentUrl { get; set; } = string.Empty;
-    public string CampaignCodeFriendlyName { get; set; } = string.Empty;
-    public string CampaignCode { get; set; } = string.Empty;
+    public string DiscountCodeName { get; set; } = string.Empty;
+    public string DiscountCode { get; set; } = string.Empty;
     public List<Campaign> Campaigns { get; set; } = [];
     public List<AdditionalInputField> AdditionalInputFields { get; set; } = [];
     public bool ToBePaidInRestaurantSystem { get; set; }
