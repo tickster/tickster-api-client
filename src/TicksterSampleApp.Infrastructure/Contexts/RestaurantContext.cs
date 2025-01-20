@@ -16,7 +16,11 @@ public partial class SampleAppContext : DbContext
             .HasPrincipalKey(r => r.Id);
 
         modelBuilder.Entity<Restaurant>()
+            .Property(r => r.VenueId)
+            .HasColumnType("int");
+
+        modelBuilder.Entity<Restaurant>()
             .Property(r => r.RestaurantName)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
     }
 }

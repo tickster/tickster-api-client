@@ -17,18 +17,18 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Campaign>()
             .Property(c => c.TicksterCampaignId)
-            .HasMaxLength(10);
+            .HasColumnType("varchar(10)");
 
         modelBuilder.Entity<Campaign>()
             .Property(c => c.TicksterCommunicationId)
-            .HasMaxLength(10);
+            .HasColumnType("varchar(10)");
 
         modelBuilder.Entity<Campaign>()
             .Property(c => c.ActivationCode)
-            .HasMaxLength(10);
+            .HasColumnType("varchar(10)");
 
         modelBuilder.Entity<Campaign>()
             .Property(c => c.TicksterInternalReference)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
     }
 }

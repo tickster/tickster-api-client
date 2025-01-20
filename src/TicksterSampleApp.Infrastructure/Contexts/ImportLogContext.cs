@@ -11,5 +11,13 @@ public partial class SampleAppContext : DbContext
     {
         modelBuilder.Entity<ImportLog>()
             .HasKey(il => new { il.LastTicksterCrmId, il.Date });
+
+        modelBuilder.Entity<ImportLog>()
+            .Property(il => il.LastTicksterCrmId)
+            .HasColumnType("int");
+
+        modelBuilder.Entity<ImportLog>()
+            .Property(il => il.Date)
+            .HasColumnType("datetime");
     }
 }

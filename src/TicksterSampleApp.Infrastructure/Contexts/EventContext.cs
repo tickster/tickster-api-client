@@ -17,18 +17,34 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Event>()
             .Property(e => e.TicksterEventId)
-            .HasMaxLength(20);
+            .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Event>()
             .Property(e => e.Name)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
+
+        modelBuilder.Entity<Event>()
+            .Property(e => e.Start)
+            .HasColumnType("datetime");
+
+        modelBuilder.Entity<Event>()
+            .Property(e => e.End)
+            .HasColumnType("datetime");
+
+        modelBuilder.Entity<Event>()
+            .Property(e => e.LastUpdated)
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<Event>()
             .Property(e => e.TicksterProductionId)
-            .HasMaxLength(20);
+            .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Event>()
             .Property(e => e.ProductionName)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
+
+        modelBuilder.Entity<Event>()
+            .Property(e => e.VenueId)
+            .HasColumnType("int");
     }
 }

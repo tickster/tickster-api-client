@@ -30,35 +30,51 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.TicksterCrmId)
-            .HasMaxLength(50);
+            .HasColumnType("varchar(50)");
+
+        modelBuilder.Entity<Purchase>()
+            .Property(p => p.CustomerId)
+            .HasColumnType("int");
+
+        modelBuilder.Entity<Purchase>()
+            .Property(p => p.CampaignId)
+            .HasColumnType("int");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.TicksterPurchaseRefNo)
-            .HasMaxLength(10);
+            .HasColumnType("varchar(10)");
 
         modelBuilder.Entity<Purchase>()
-            .Property(p => p.DiscountCode)
-            .HasMaxLength(255);
+            .Property(p => p.Created)
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<Purchase>()
-            .Property(p => p.DiscountCodeName)
-            .HasMaxLength(255);
+            .Property(p => p.LastUpdated)
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.Currency)
-            .HasMaxLength(3);
+            .HasColumnType("char(3)");
+
+        modelBuilder.Entity<Purchase>()
+            .Property(p => p.DiscountCode)
+            .HasColumnType("varchar(255)");
+
+        modelBuilder.Entity<Purchase>()
+            .Property(p => p.DiscountCodeName)
+            .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.EogRequestCode)
-            .HasMaxLength(15);
+            .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.PrivacyRefNo)
-            .HasMaxLength(5);
+            .HasColumnType("varchar(5)");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.TermsRefNo)
-            .HasMaxLength(5);
+            .HasColumnType("varchar(5)");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.Status)

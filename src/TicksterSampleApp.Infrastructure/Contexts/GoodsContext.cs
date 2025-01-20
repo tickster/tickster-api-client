@@ -24,35 +24,55 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.GoodsId)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.PurchaseId)
+            .HasColumnType("int");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.Name)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.ReceiptText)
+            .HasColumnType("text");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.ArticleNumber)
-            .HasMaxLength(50);
+            .HasColumnType("varchar(50)");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.PriceIncVatAfterDiscount)
-            .HasPrecision(10, 2);
+            .HasColumnType("decimal(10, 2)");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.VatPortion)
-            .HasPrecision(10, 2);
+            .HasColumnType("decimal(10, 2)");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.VatPercent)
-            .HasPrecision(10, 2);
+            .HasColumnType("decimal(10, 2)");
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.EventId)
+            .HasColumnType("int");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.Section)
-            .HasMaxLength(50);
+            .HasColumnType("varchar(50)");
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.Seat)
+            .HasColumnType("int");
+
+        modelBuilder.Entity<Goods>()
+            .Property(g => g.Row)
+            .HasColumnType("int");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.PartOfSeasonTokenGoodsId)
-            .HasMaxLength(50);
+            .HasColumnType("varchar(50)");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.Type)

@@ -17,34 +17,34 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.TicksterVenueId)
-            .HasMaxLength(20);
+            .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.Name)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.Address)
-            .HasMaxLength(255);
+            .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.ZipCode)
-            .HasMaxLength(20);
+            .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.City)
-            .HasMaxLength(100);
+            .HasColumnType("varchar(100)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.CountryCode)
-            .HasMaxLength(2);
+            .HasColumnType("char(2)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.Latitude)
-            .HasPrecision(8, 6);
+            .HasColumnType("decimal(6, 2)");
 
         modelBuilder.Entity<Venue>()
             .Property(v => v.Longitude)
-            .HasPrecision(9, 6);
+            .HasColumnType("decimal(6, 2)");
     }
 }
