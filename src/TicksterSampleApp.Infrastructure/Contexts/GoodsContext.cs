@@ -27,10 +27,6 @@ public partial class SampleAppContext : DbContext
             .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Goods>()
-            .Property(g => g.PurchaseId)
-            .HasColumnType("int");
-
-        modelBuilder.Entity<Goods>()
             .Property(g => g.Name)
             .HasColumnType("varchar(255)");
 
@@ -55,20 +51,8 @@ public partial class SampleAppContext : DbContext
             .HasColumnType("decimal(10, 2)");
 
         modelBuilder.Entity<Goods>()
-            .Property(g => g.EventId)
-            .HasColumnType("int");
-
-        modelBuilder.Entity<Goods>()
             .Property(g => g.Section)
             .HasColumnType("varchar(50)");
-
-        modelBuilder.Entity<Goods>()
-            .Property(g => g.Seat)
-            .HasColumnType("int");
-
-        modelBuilder.Entity<Goods>()
-            .Property(g => g.Row)
-            .HasColumnType("int");
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.PartOfSeasonTokenGoodsId)
@@ -76,6 +60,7 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Goods>()
             .Property(g => g.Type)
+            .HasColumnType("varchar(50)")
             .HasConversion(v => v.ToString(),
             v => (GoodsType)Enum.Parse(typeof(GoodsType), v));
     }

@@ -33,24 +33,8 @@ public partial class SampleAppContext : DbContext
             .HasColumnType("varchar(50)");
 
         modelBuilder.Entity<Purchase>()
-            .Property(p => p.CustomerId)
-            .HasColumnType("int");
-
-        modelBuilder.Entity<Purchase>()
-            .Property(p => p.CampaignId)
-            .HasColumnType("int");
-
-        modelBuilder.Entity<Purchase>()
             .Property(p => p.TicksterPurchaseRefNo)
             .HasColumnType("varchar(10)");
-
-        modelBuilder.Entity<Purchase>()
-            .Property(p => p.Created)
-            .HasColumnType("datetime");
-
-        modelBuilder.Entity<Purchase>()
-            .Property(p => p.LastUpdated)
-            .HasColumnType("datetime");
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.Currency)
@@ -78,11 +62,13 @@ public partial class SampleAppContext : DbContext
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.Status)
+            .HasColumnType("varchar(20)")
             .HasConversion(v => v.ToString(),
             v => (Status)Enum.Parse(typeof(Status), v));
 
         modelBuilder.Entity<Purchase>()
             .Property(p => p.Channel)
+            .HasColumnType("varchar(20)")
             .HasConversion(v => v.ToString(),
             v => (Channel)Enum.Parse(typeof(Channel), v));
     }

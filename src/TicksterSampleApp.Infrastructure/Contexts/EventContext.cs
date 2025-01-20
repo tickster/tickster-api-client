@@ -24,27 +24,11 @@ public partial class SampleAppContext : DbContext
             .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Event>()
-            .Property(e => e.Start)
-            .HasColumnType("datetime");
-
-        modelBuilder.Entity<Event>()
-            .Property(e => e.End)
-            .HasColumnType("datetime");
-
-        modelBuilder.Entity<Event>()
-            .Property(e => e.LastUpdated)
-            .HasColumnType("datetime");
-
-        modelBuilder.Entity<Event>()
             .Property(e => e.TicksterProductionId)
             .HasColumnType("varchar(20)");
 
         modelBuilder.Entity<Event>()
             .Property(e => e.ProductionName)
             .HasColumnType("varchar(255)");
-
-        modelBuilder.Entity<Event>()
-            .Property(e => e.VenueId)
-            .HasColumnType("int");
     }
 }
