@@ -110,7 +110,7 @@
             "partOfSeasonTokenGoodsId": null,
             "partOfTableReservation": true,
             "canBePlacedAtTable": false,
-            "restaurantId": "240",
+            "restaurantId": 240,
             "tags": ["voucher"]
 
           },

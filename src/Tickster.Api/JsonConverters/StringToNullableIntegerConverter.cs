@@ -2,17 +2,22 @@
 using System.Text.Json.Serialization;
 
 namespace Tickster.Api.JsonConverters;
-internal class StringToIntegerConverter : JsonConverter<int>
+internal class StringToNullableIntegerConverter : JsonConverter<int?>
 {
-    public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override int? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
+        if (reader.TokenType == JsonTokenType.Null)
+        {
+            return null;
+        }
+        
         if (reader.TokenType == JsonTokenType.String)
         {
             var str = reader.GetString();
 
             if (string.IsNullOrEmpty(str))
             {
-                return 0;
+                return null;
             }
 
             if (int.TryParse(str, out int value))
@@ -24,9 +29,9 @@ internal class StringToIntegerConverter : JsonConverter<int>
         return reader.GetInt32();
     }
 
-    public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, int? value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString());
+        writer.WriteStringValue(value?.ToString());
     }
 }
 

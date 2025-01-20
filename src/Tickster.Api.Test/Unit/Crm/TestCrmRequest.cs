@@ -107,7 +107,7 @@ public class TestCrmRequest : RequestTestBase
         Assert.Null(item.PartOfSeasonTokenGoodsId);
         Assert.True(item.PartOfTableReservation);
         Assert.False(item.CanBePlacedAtTable);
-        Assert.Equal("240", item.RestaurantId);
+        Assert.Equal(240, item.RestaurantId);
         Assert.Single(item.Tags);
         Assert.Contains("voucher", item.Tags);
 
@@ -125,7 +125,21 @@ public class TestCrmRequest : RequestTestBase
         Assert.Equal("SEAS-DEF-0", ticket.PartOfSeasonTokenGoodsId);
         Assert.False(ticket.PartOfTableReservation);
         Assert.False(ticket.CanBePlacedAtTable);
-        Assert.Equal(string.Empty, ticket.RestaurantId);
+        Assert.Null(ticket.RestaurantId);
+    }
+
+    [Theory]
+    [InlineData("crm-restaurant-id-as-int.json", 123)]
+    [InlineData("crm-restaurant-id-as-string.json", 123)]
+    [InlineData("crm-restaurant-id-as-null.json", null)]
+    public async Task GetCrmPurchasesAsync_EventRestaurantIdFormats(string testFile, int? expectedId)
+    {
+        SetupMockResponse(testFile);
+        var result = await TicksterClient.GetCrmPurchasesAsync(1);
+        var item = result.FirstOrDefault()?.Goods?.FirstOrDefault();
+
+        Assert.NotNull(item);
+        Assert.Equal(expectedId, item.RestaurantId);
     }
 }
 
