@@ -5,5 +5,5 @@ public interface ITicksterHttpAgent
 {
     HttpClient HttpClient { get; }
 
-    Task<string> MakeCrmRequest(string endpoint, int fromPurchase, int resultLimit, string lang);
+    Task<string> MakeCrmRequest(string endpoint, int fromPurchase, int resultLimit, string lang, bool loadChildEogData = true);
 }

@@ -126,6 +126,9 @@ public class TestCrmRequest : RequestTestBase
         Assert.False(ticket.PartOfTableReservation);
         Assert.False(ticket.CanBePlacedAtTable);
         Assert.Null(ticket.RestaurantId);
+
+        // FIXME: Tests for AdditionalInputField list and entity
+        // FIXME: Tests for Campaign list and entity
     }
 
     [Theory]
@@ -140,6 +143,20 @@ public class TestCrmRequest : RequestTestBase
 
         Assert.NotNull(item);
         Assert.Equal(expectedId, item.RestaurantId);
+    }
+
+    [Fact]
+    public async Task GetCrmPurchasesAsync_TestEmptyResponse()
+    {
+        // Arrange
+        SetupMockResponse("crm-purchases-empty.json");
+
+        // Act
+        var result = await TicksterClient.GetCrmPurchasesAsync(1);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Empty(result);
     }
 }
 

@@ -27,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestResponses\crm-error-429.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestResponses\crm-purchases-empty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestResponses\crm-purchases-ok.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

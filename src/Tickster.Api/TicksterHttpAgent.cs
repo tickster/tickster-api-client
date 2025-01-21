@@ -1,16 +1,22 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Tickster.Api.Dtos;
 using Tickster.Api.Exceptions;
 
 namespace Tickster.Api;
 
-public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITicksterHttpAgent
+public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null) : ITicksterHttpAgent
 {
     public HttpClient HttpClient => client;
     private readonly string _eogRequestCode = eogRequestCode ?? string.Empty;
 
-    public async Task<string> MakeCrmRequest(string endpoint, int fromPurchase, int resultLimit, string lang)
+    public async Task<string> MakeCrmRequest(
+        string endpoint, 
+        int fromPurchase, 
+        int resultLimit, 
+        string lang,
+        bool loadChildEogData = true)
     {
         if (string.IsNullOrEmpty(_eogRequestCode))
         {
@@ -22,6 +28,11 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITic
             Path = $"/api/{lang}/0.4/crm/{_eogRequestCode}",
             Query = $"key={GetApiKey()}"
         };
+
+        if (!loadChildEogData)
+        {
+            crmRequestUrl.Query += "&loadChildEogData=false";
+        }
 
         if (!string.IsNullOrWhiteSpace(endpoint))
         {
@@ -63,7 +74,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITic
     private string GetApiKey()
         => HttpClient.DefaultRequestHeaders.GetValues("x-api-key").FirstOrDefault("");
 
-    private static async Task<TicksterApiError> CreateExceptionFromResponse(HttpResponseMessage response, Exception originalException)
+    private static async Task<TicksterApiError> CreateExceptionFromResponse(HttpResponseMessage response, HttpRequestException originalException)
     {
         var content = await response.Content.ReadAsStringAsync();
 
@@ -90,7 +101,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITic
         }
     }
 
-    private static TicksterApiError BuildRequestException(ErrorResponse response, Exception e)
+    private static TicksterApiError BuildRequestException(ErrorResponse response, HttpRequestException e)
         => new(response.Title, e)
         {
             Type = response.Type,
@@ -104,9 +115,10 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode) : ITic
                 response.AdditionalProp3]
         };
 
-    private static TicksterApiError BuildRequestException(CrmErrorResponse response, Exception e)
+    private static TicksterApiError BuildRequestException(CrmErrorResponse response, HttpRequestException e)
         => new(response.Error, e)
         {
-            Title = response.Error
+            Title = response.Error,
+            Status = (int?)e.StatusCode ?? 0
         };
 }
