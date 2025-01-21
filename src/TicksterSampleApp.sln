@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tickster.Api", "Tickster.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.TicksterConsole", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.TicksterConsole.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicksterSampleApp.Infrastructure", "TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj", "{336B6BD6-9E07-4361-B865-D3DB39F03855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.Infrastructure", "TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj", "{336B6BD6-9E07-4361-B865-D3DB39F03855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tickster.Api.Test", "Tickster.Api.Test\Tickster.Api.Test.csproj", "{B3570400-200C-4C5E-96D5-65FC5615CBFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tickster.Api.Test", "Tickster.Api.Test\Tickster.Api.Test.csproj", "{B3570400-200C-4C5E-96D5-65FC5615CBFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.Domain", "TicksterSampleApp.Domain\TicksterSampleApp.Domain.csproj", "{53CB4DAC-D96B-40FA-9CE8-DDE5D4521064}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3570400-200C-4C5E-96D5-65FC5615CBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53CB4DAC-D96B-40FA-9CE8-DDE5D4521064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53CB4DAC-D96B-40FA-9CE8-DDE5D4521064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53CB4DAC-D96B-40FA-9CE8-DDE5D4521064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53CB4DAC-D96B-40FA-9CE8-DDE5D4521064}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

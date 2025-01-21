@@ -1,8 +1,10 @@
-﻿namespace SampleApp.TicksterConsole;
+﻿using Microsoft.Extensions.Hosting;
+using TicksterSampleApp.Infrastructure.Configuration;
 
-internal class Program
-{
-    static void Main(string[] args)
-    {
-    }
-}
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+using IHost host = builder.Build();
+
+await host.RunAsync();
