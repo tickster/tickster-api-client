@@ -3,13 +3,13 @@ using Moq;
 using Tickster.Api.Test.Utils;
 
 namespace Tickster.Api.Test;
-public abstract class RequestTestBase
+public abstract class MockAgentBase
 {
     protected Mock<ITicksterHttpAgent> MockAgent { get; private set; }
     protected TicksterOptions TicksterOptions { get; private set; }
     protected TicksterClient TicksterClient { get; private set; }
 
-    public RequestTestBase()
+    public MockAgentBase()
     {
         var options = Options.Create(new TicksterOptions
         {

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 using Tickster.Api.Dtos;
 using Tickster.Api.Exceptions;
+using Tickster.Api.Models;
 
 namespace Tickster.Api;
 
@@ -10,6 +10,8 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
 {
     public HttpClient HttpClient => client;
     private readonly string _eogRequestCode = eogRequestCode ?? string.Empty;
+
+    public RateLimitInfo RateLimitInfo { get; private set; } = new();
 
     public async Task<string> MakeCrmRequest(
         string endpoint, 
@@ -48,6 +50,8 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
     {
         var response = await HttpClient.GetAsync(url);
 
+        TryUpdateRateLimit(response);
+
         try
         {
             response.EnsureSuccessStatusCode();
@@ -57,8 +61,8 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
             switch (ex.StatusCode)
             {
                 case HttpStatusCode.TooManyRequests:
-                    // FIXME: Handle backoff
-                    break;
+                    throw new RateLimitExceededError(RateLimitInfo, ex);
+
                 case HttpStatusCode.BadRequest:
                 case HttpStatusCode.NotFound:
                     throw await CreateExceptionFromResponse(response, ex);
@@ -69,6 +73,31 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
         }
 
         return await response.Content.ReadAsStringAsync();
+    }
+
+    private void TryUpdateRateLimit(HttpResponseMessage response)
+    {
+        var limit = GetRateLimitHeader(response, "limit");
+        var remaining = GetRateLimitHeader(response, "remaining");
+
+        if (limit == null || remaining  == null)
+            return;
+
+        RateLimitInfo.FirstRequestAtUtc ??= DateTime.UtcNow;
+        RateLimitInfo.LastRequestAtUtc = DateTime.UtcNow;
+        RateLimitInfo.ConfiguredLimit = limit.Value;
+        RateLimitInfo.RemainingRequests = remaining.Value;
+    }
+
+    private static int? GetRateLimitHeader(HttpResponseMessage response, string header)
+    {
+        if (!response.Headers.TryGetValues($"x-ratelimit-{header}", out var values))
+            return null;
+
+        if (int.TryParse(values.FirstOrDefault(), out int value))
+            return value;
+
+        return null;
     }
 
     private string GetApiKey()

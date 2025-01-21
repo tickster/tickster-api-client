@@ -3,6 +3,7 @@ using System.Text.Json;
 using Tickster.Api.Models.Crm;
 using System.Text.Json.Serialization;
 using Tickster.Api.Dtos;
+using Tickster.Api.Models;
 
 namespace Tickster.Api;
 public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgent agent)
@@ -14,6 +15,7 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
     };
 
     public ITicksterHttpAgent Agent => agent;
+    public RateLimitInfo RateLimitInfo => Agent.RateLimitInfo;
 
     public async Task<IEnumerable<Purchase>> GetCrmPurchasesAsync(
         int purchaseId, 
