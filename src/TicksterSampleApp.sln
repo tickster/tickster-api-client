@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tickster.Api", "Tickster.Api\Tickster.Api.csproj", "{F8D63CC4-709E-4C50-90A1-E85444FE7340}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.TicksterConsole", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.TicksterConsole.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.Importer", "TicksterSampleApp.TicksterConsole\TicksterSampleApp.Importer.csproj", "{ED3481A8-7B33-4C44-B4E5-2777C0831DEF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicksterSampleApp.Infrastructure", "TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj", "{336B6BD6-9E07-4361-B865-D3DB39F03855}"
 EndProject

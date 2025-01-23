@@ -4,13 +4,11 @@ namespace TicksterSampleApp.Domain.Models;
 
 public class Purchase
 {
-    public Customer Customer { get; set; } = new();
-    public Campaign Campaign { get; set; } = new();
     public ICollection<Goods> Goods { get; set; } = [];
-    public int Id { get; set; }
-    public string TicksterCrmId { get; set; } = string.Empty;
-    public int CustomerId { get; set; }
-    public int CampaignId { get; set; }
+    public Guid? CustomerId { get; set; }
+    public Customer? Customer { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public int TicksterCrmId { get; set; }
     public string TicksterPurchaseRefNo { get; set; } = string.Empty;
     public Status Status { get; set; }
     public DateTime Created { get; set; } = new();

@@ -10,20 +10,18 @@ public partial class SampleAppContext : DbContext
 
     public void OnModelCreatingGoods(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Goods>()
-            .HasOne(g => g.Restaurant)
-            .WithMany(r => r.Goods)
-            .HasForeignKey(g => g.RestaurantId)
-            .HasPrincipalKey(r => r.Id);
+        //modelBuilder.Entity<Goods>()
+        //    .HasOne(g => g.Restaurant)
+        //    .WithMany(r => r.Goods)
+        //    .IsRequired(false);
+
+        //modelBuilder.Entity<Goods>()
+        //    .HasOne(g => g.Event)
+        //    .WithMany(e => e.Goods)
+        //    .IsRequired(false);
 
         modelBuilder.Entity<Goods>()
-            .HasOne(g => g.Event)
-            .WithMany(e => e.Goods)
-            .HasForeignKey(g => g.EventId)
-            .HasPrincipalKey(e => e.Id);
-
-        modelBuilder.Entity<Goods>()
-            .Property(g => g.GoodsId)
+            .Property(g => g.TicksterGoodsId)
             .HasColumnType("varchar(255)");
 
         modelBuilder.Entity<Goods>()

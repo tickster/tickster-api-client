@@ -15,7 +15,7 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         {
             // Assert
             Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Equal("https://api.example.com/api/xx/0.4/crm/the-eog-code/10/15?key=the-api-key", request.RequestUri?.ToString());
+            Assert.Equal("https://api.example.com/xx/api/0.4/crm/the-eog-code/10/15?key=the-api-key", request.RequestUri?.ToString());
         };
 
         SetupMockResponse();
@@ -32,7 +32,7 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         {
             // Assert
             Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Equal("https://api.example.com/api/xx/0.4/crm/the-eog-code/10/15?key=the-api-key&loadChildEogData=false", request.RequestUri?.ToString());
+            Assert.Equal("https://api.example.com/xx/api/0.4/crm/the-eog-code/10/15?key=the-api-key&loadChildEogData=false", request.RequestUri?.ToString());
         };
 
         SetupMockResponse();
