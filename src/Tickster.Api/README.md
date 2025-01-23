@@ -45,8 +45,7 @@ public class MyService
 
     public async Task DoSomethingAsync()
     {
-        var response = await _client.Agent.HttpClient.GetAsync("/some-endpoint");
-        // Handle response
+        var purchases = await _client.GetCrmPurchases(1234);
     }
 }
 ```
@@ -69,7 +68,25 @@ var httpClient = new HttpClient();
 var client = factory.Create(httpClient);
 
 // Use the client
-var response = await client.Agent.HttpClient.GetAsync("/some-endpoint");
+var purchases = await client.GetCrmPurchases(1234);
+```
+
+## Low-level API
+
+The low-level API provides direct access to the TicksterHttpAgent class used to build HTTP requests and handle API exceptions, as well as the underlying HttpClient used to perform the requests.
+
+ * `TicksterClient.Agent` - Builds and executes requests, handles errors
+ * `TicksterClient.Agent.HttpClient` - Underlying, pre-configured HttpClient
+
+```csharp
+
+// Retrieve raw, unparsed JSON for a call to the CRM API
+var rawResponseContent = await _client.Agent.MakeCrmRequest("", 12345, 100, "sv");
+
+// Retrieve the HttpResponseMessage object for the same call
+var response = await _client.Agent.HttpClient.GetAsync($"/api/sv/0.4/crm/{_client.Options.EogRequestCode}/12345/100?key={_client.Options.ApiKey}");
+
+
 ```
 
 ---

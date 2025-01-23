@@ -1,0 +1,14 @@
+{
+  "purchases": [
+    {
+      "purchase": {
+        "crmId": 6301344,
+        "goods": [
+          {
+            "restaurantId": "123"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -10,7 +10,8 @@ public class GoodsItem
     public string Name { get; set; } = string.Empty;
     public GoodsItemType Type { get; set; } = GoodsItemType.Undefined;
     public string ReceiptText { get; set; } = string.Empty;
-    public string? RestaurantId { get; set; } = string.Empty;
+    [JsonConverter(typeof(StringToNullableIntegerConverter))]
+    public int? RestaurantId { get; set; }
     public bool CanBePlacedAtTable { get; set; }
     [JsonConverter(typeof(StringToDecimalConverter))]
     public decimal PriceIncVatAfterDiscount { get; set; }

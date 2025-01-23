@@ -3,7 +3,7 @@ using System.Text.Json;
 using Tickster.Api.Models.Crm;
 using System.Text.Json.Serialization;
 using Tickster.Api.Dtos;
-using Tickster.Api.JsonConverters;
+using Tickster.Api.Models;
 
 namespace Tickster.Api;
 public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgent agent)
@@ -15,13 +15,24 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
     };
 
     public ITicksterHttpAgent Agent => agent;
+    public RateLimitInfo RateLimitInfo => Agent.RateLimitInfo;
 
-    public async Task<IEnumerable<Purchase>> GetCrmPurchasesAsync(int purchaseId, int? limit = null, string? lang = null)
+    public async Task<IEnumerable<Purchase>> GetCrmPurchasesAsync(
+        int purchaseId, 
+        int? limit = null, 
+        string? lang = null, 
+        bool includeAllAccounts = true)
     {
         lang ??= _options.DefaultLanguage;
         limit ??= _options.DefaultResultLimit;
 
-        var json = await Agent.MakeCrmRequest(string.Empty, purchaseId, (int)limit, lang);
+        var json = await Agent.MakeCrmRequest(
+            endpoint: string.Empty, 
+            fromPurchase: purchaseId,
+            resultLimit: (int)limit,
+            lang: lang,
+            loadChildEogData: includeAllAccounts);
+
         var result = ParseJsonResponse<CrmPurchaseLogResponse>(json);
 
         return result.Purchases.Select(p => p.Purchase);
