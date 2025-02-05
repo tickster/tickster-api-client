@@ -1,6 +1,9 @@
 # tickster-api-client
 Client and sample application for using Tickster's API
 
+### Install Entity Framework
+`dotnet tool install --global dotnet-ef`
+
 ### Create Sqlite database
 
 From the console project run the following to create a new migration
