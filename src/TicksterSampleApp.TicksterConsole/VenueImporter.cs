@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer;
 
 public class VenueImporter(SampleAppContext dbContext)
 {
-    public async Task<Guid> ProcessVenueAsync(Tickster.Api.Models.Crm.Venue crmVenue)
+    public async Task<Guid> Import(Tickster.Api.Models.Crm.Venue crmVenue)
     {
         var venue = await dbContext.Venues.SingleOrDefaultAsync(v => v.TicksterVenueId == crmVenue.Id);
 

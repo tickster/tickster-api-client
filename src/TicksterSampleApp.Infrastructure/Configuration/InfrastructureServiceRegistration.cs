@@ -37,10 +37,6 @@ public static class InfrastructureServiceRegistration
 
         services.AddDbContext<SampleAppContext>(options =>
             options.UseSqlite($"Data Source={dbPath}")
-            // Comment out to enable more detailed logging in dev
-
-            //.EnableSensitiveDataLogging()
-            //.LogTo(Console.WriteLine)
         );
     }
 }

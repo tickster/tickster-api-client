@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer;
 
 public class EventImporter(SampleAppContext dbContext, RestaurantImporter RestaurantImporter, VenueImporter VenueImporter)
 {
-    public async Task ProcessEventAsync(List<Tickster.Api.Models.Crm.Event> crmEvents)
+    public async Task Import(List<Tickster.Api.Models.Crm.Event> crmEvents)
     {
         foreach (var crmEvent in crmEvents)
         {
@@ -23,9 +23,9 @@ public class EventImporter(SampleAppContext dbContext, RestaurantImporter Restau
                 mappedEvent = Mapper.MapEvent(crmEvent, ev);
             }
 
-            await RestaurantImporter.ProcessRestaurantAsync(mappedEvent.Id, crmEvent.Restaurants);     
+            await RestaurantImporter.Import(mappedEvent.Id, crmEvent.Restaurants);     
             
-            mappedEvent.VenueId = await VenueImporter.ProcessVenueAsync(crmEvent.Venue);
+            mappedEvent.VenueId = await VenueImporter.Import(crmEvent.Venue);
 
             await dbContext.SaveChangesAsync();
         }

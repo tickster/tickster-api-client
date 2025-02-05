@@ -5,7 +5,7 @@ namespace TicksterSampleApp.Importer;
 
 public class GoodsImporter(SampleAppContext dbContext)
 {
-    public async Task ProcessGoodsAsync(Guid purchaseId, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
+    public async Task Import(Guid purchaseId, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
     {
         foreach (var crmGood in crmGoods)
         {

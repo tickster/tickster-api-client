@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer;
 
 public class CustomerImporter(SampleAppContext dbContext)
 {
-    public async Task<Guid> ProcessCustomerAsync(Tickster.Api.Models.Crm.Purchase crmPurchase)
+    public async Task<Guid> Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
         var customer = await dbContext.Customers
             .SingleOrDefaultAsync(c => c.TicksterUserRefNo == crmPurchase.UserRefNo);

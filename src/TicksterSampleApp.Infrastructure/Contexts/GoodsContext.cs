@@ -10,16 +10,6 @@ public partial class SampleAppContext : DbContext
 
     public void OnModelCreatingGoods(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Goods>()
-        //    .HasOne(g => g.Restaurant)
-        //    .WithMany(r => r.Goods)
-        //    .IsRequired(false);
-
-        //modelBuilder.Entity<Goods>()
-        //    .HasOne(g => g.Event)
-        //    .WithMany(e => e.Goods)
-        //    .IsRequired(false);
-
         modelBuilder.Entity<Goods>()
             .Property(g => g.TicksterGoodsId)
             .HasColumnType("varchar(255)");

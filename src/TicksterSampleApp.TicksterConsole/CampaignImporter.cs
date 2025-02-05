@@ -5,7 +5,7 @@ namespace TicksterSampleApp.Importer;
 
 public class CampaignImporter(SampleAppContext dbContext, PurchaseCampaignImporter PurchaseCampaignImporter)
 {
-    public async Task ProcessCampaignAsync(Guid purchaseId, List<Tickster.Api.Models.Crm.Campaign> crmCampaigns)
+    public async Task Import(Guid purchaseId, List<Tickster.Api.Models.Crm.Campaign> crmCampaigns)
     {
         foreach (var crmCampaign in crmCampaigns)
         {

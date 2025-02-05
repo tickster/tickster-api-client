@@ -9,10 +9,6 @@ public partial class SampleAppContext : DbContext
 
     public void OnModelCreatingCustomer(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Customer>()
-        //    .HasIndex(c => c.TicksterUserRefNo)
-        //    .IsUnique(true);
-
         modelBuilder.Entity<Customer>()
             .Property(c => c.TicksterUserRefNo)
             .HasColumnType("varchar(10)");

@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer;
 
 public class RestaurantImporter(SampleAppContext dbContext, EventRestaurantImporter EventRestaurantImporter)
 {
-    public async Task ProcessRestaurantAsync(Guid eventId, List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants)
+    public async Task Import(Guid eventId, List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants)
     {
         foreach (var crmRestaurant in crmRestaurants)
         {

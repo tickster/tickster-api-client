@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer;
 
 public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter CustomerImporter, EventImporter EventImporter, GoodsImporter GoodsImporter, CampaignImporter CampaignImporter)
 {
-    public async Task ProcessPurchaseAsync(Tickster.Api.Models.Crm.Purchase crmPurchase)
+    public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
         var purchase = await dbContext.Purchases
             .AsNoTracking()
@@ -25,13 +25,13 @@ public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter Custo
             await dbContext.SaveChangesAsync();
         }
 
-        mappedPurchase.CustomerId = await CustomerImporter.ProcessCustomerAsync(crmPurchase);
+        mappedPurchase.CustomerId = await CustomerImporter.Import(crmPurchase);
 
-        await EventImporter.ProcessEventAsync(crmPurchase.Events);
+        await EventImporter.Import(crmPurchase.Events);
 
-        await GoodsImporter.ProcessGoodsAsync(mappedPurchase.Id, crmPurchase.Goods);
+        await GoodsImporter.Import(mappedPurchase.Id, crmPurchase.Goods);
 
-        await CampaignImporter.ProcessCampaignAsync(mappedPurchase.Id, crmPurchase.Campaigns);
+        await CampaignImporter.Import(mappedPurchase.Id, crmPurchase.Campaigns);
 
         await dbContext.SaveChangesAsync();
     }

@@ -10,25 +10,6 @@ public partial class SampleAppContext : DbContext
 
     public void OnModelCreatingPurchase(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Purchase>()
-        //    .HasOne(p => p.Customer)
-        //    .WithMany(c => c.Purchases)
-        //    .IsRequired(false);
-
-        //modelBuilder.Entity<Purchase>()
-        //    .HasOne(p => p.Campaign)
-        //    .WithMany(c => c.Purchases)
-        //    .IsRequired(false);
-
-        //modelBuilder.Entity<Purchase>()
-        //    .HasMany(g => g.Goods)
-        //    .WithOne(p => p.Purchase)
-        //    .IsRequired(false);
-
-        //modelBuilder.Entity<Purchase>()
-        //    .HasIndex(p => p.TicksterCrmId)
-        //    .IsUnique();
-
         modelBuilder.Entity<Purchase>()
             .Property(p => p.TicksterPurchaseRefNo)
             .HasColumnType("varchar(10)");

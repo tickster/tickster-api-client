@@ -8,6 +8,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddUserSecrets<Program>();
 
+// Create add Importer method
 builder.Services
     .AddInfrastructureServices(builder.Configuration)
     .AddTransient<Importer>()
@@ -25,6 +26,6 @@ builder.Services
 using IHost host = builder.Build();
 
 int lastCrmId = await host.Services.GetRequiredService<ImportLogHandler>().GetLastCrmId();
-await host.Services.GetRequiredService<Importer>().ImportPurchases(lastCrmId);
+await host.Services.GetRequiredService<Importer>().Import(lastCrmId);
 
 await host.RunAsync();

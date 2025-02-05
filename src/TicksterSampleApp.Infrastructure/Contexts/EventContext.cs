@@ -9,11 +9,6 @@ public partial class SampleAppContext : DbContext
 
     public void OnModelCreatingEvent(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Event>()
-        //    .HasOne(e => e.VenueId)
-        //    .WithMany(g => g.Id)
-        //    .IsRequired(false);
-
         modelBuilder.Entity<Event>()
             .Property(e => e.TicksterEventId)
             .HasColumnType("varchar(20)");
