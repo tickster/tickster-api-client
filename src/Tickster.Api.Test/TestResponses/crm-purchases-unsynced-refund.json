@@ -1,0 +1,204 @@
+{
+  "purchases": [
+    {
+      "purchase": {
+        "crmId": 1234,
+        "eogRequestCode": "XXJMN4T4774RXYW",
+        "status": "Completed",
+        "bookingPaymentUrl": null,
+        "purchaseRefno": "XXBYKF1ZAZ",
+        "parentPurchaseRefno": "",
+        "createdUtc": "2024-04-18T12:06:36.95Z",
+        "lastupdatedUtc": "2024-04-18T13:45:46.453Z",
+        "currency": "SEK",
+        "privacyrefno": "XXL77",
+        "termsrefno": "XX075",
+        "channel": "Backoffice",
+        "userrefno": "",
+        "firstname": "",
+        "lastname": "",
+        "postalAddressLineOne": "",
+        "postalAddressLineTwo": "",
+        "zipcode": "",
+        "city": "",
+        "countryCode": "SE",
+        "companyName": null,
+        "isCompany": false,
+        "mobilePhoneNo": "",
+        "email": "jane.doe@example.com",
+        "acceptInfo": false,
+        "idNo": "",
+        "toBePaidInRestaurantSystem": false,
+        "discountCodeName": "",
+        "discountCode": "",
+        "campaigns": [],
+        "events": [],
+        "goods": [],
+        "additionalinputfields": []
+      }
+    },
+    {
+      "purchase": {
+        "crmId": 1235,
+        "eogRequestCode": "3LJMN4T4774RXYW",
+        "status": "Completed",
+        "bookingPaymentUrl": null,
+        "purchaseRefno": "G58KXBV00L",
+        "parentPurchaseRefno": "",
+        "createdUtc": "2024-04-18T13:11:03.787Z",
+        "lastupdatedUtc": "2024-04-18T13:12:28.717Z",
+        "currency": "SEK",
+        "privacyrefno": "ATL77",
+        "termsrefno": "9Z075",
+        "channel": "Webshop",
+        "userrefno": "URBDNLG3B",
+        "firstname": "John",
+        "lastname": "Doe",
+        "postalAddressLineOne": "",
+        "postalAddressLineTwo": "",
+        "zipcode": "11122",
+        "city": "stocktown",
+        "countryCode": "SE",
+        "companyName": null,
+        "isCompany": false,
+        "mobilePhoneNo": "",
+        "email": "doe@example.com",
+        "acceptInfo": false,
+        "idNo": null,
+        "toBePaidInRestaurantSystem": false,
+        "discountCodeName": "",
+        "discountCode": "",
+        "campaigns": [
+          {
+            "id": "zxpyv8xx",
+            "communicationId": "PF08PXX",
+            "activationCode": "ZEDWKXX",
+            "internalReference": ""
+          }
+        ],
+        "events": [
+          {
+            "id": "b23635vj1j0cuXX",
+            "name": "AIK - Djurgården",
+            "start": "2024-04-21T14:00:00+02:00",
+            "end": "2024-04-21T18:00:00+02:00",
+            "lastUpdated": "2025-01-10T14:47:28.223+01:00",
+            "productionId": "RM6TE01K3N0JZXX",
+            "productionName": "Strawberry Arena 2025",
+            "hasTableReservation": true,
+            "tags": [],
+            "venue": {
+              "id": "k0xe40g8f65b0XX",
+              "name": "Strawberry Arena",
+              "address": "Råsta Strandväg 1",
+              "zipcode": "169 79",
+              "city": "Solna",
+              "country": "SE"
+            },
+            "restaurants": [
+              {
+                "restaurantId": 1,
+                "RestaurantName": "Loger"
+              }
+            ]
+          }
+        ],
+        "goods": [
+          {
+            "goodsid": "XXZ4-5H1-0-73247520",
+            "name": "Loge 19",
+            "receipttext": "Loge 19 (entré L)",
+            "type": "Ticket",
+            "artno": "XXZ4-5H1",
+            "priceIncVatAfterDiscount": "0",
+            "vatPortion": "0",
+            "vatPercent": "0.06",
+            "eventId": "b23635vj1j0cuxx",
+            "section": "Loge 19",
+            "seat": "30",
+            "row": "1",
+            "packageId": null,
+            "partOfSeasonToken": false,
+            "partOfSeasonTokenGoodsId": null,
+            "partOfTableReservation": true,
+            "canBePlacedAtTable": true,
+            "restaurantId": "1",
+            "tags": [
+              "loge19"
+            ]
+          },
+          {
+            "goodsid": "XXZ4-5H1-1-73247521",
+            "name": "Loge 19",
+            "receipttext": "Loge 19 (entré L)",
+            "type": "Ticket",
+            "artno": "XXZ4-5H1",
+            "priceIncVatAfterDiscount": "0",
+            "vatPortion": "0",
+            "vatPercent": "0.06",
+            "eventId": "b23635vj1j0cuxx",
+            "section": "Loge 19",
+            "seat": "29",
+            "row": "1",
+            "packageId": null,
+            "partOfSeasonToken": false,
+            "partOfSeasonTokenGoodsId": null,
+            "partOfTableReservation": true,
+            "canBePlacedAtTable": true,
+            "restaurantId": "1",
+            "tags": [
+              "loge19"
+            ]
+          },
+          {
+            "goodsid": "XXZ4-5H1-2-73247522",
+            "name": "Loge 19",
+            "receipttext": "Loge 19 (entré L)",
+            "type": "Ticket",
+            "artno": "YCZ4-5H1",
+            "priceIncVatAfterDiscount": "0",
+            "vatPortion": "0",
+            "vatPercent": "0.06",
+            "eventId": "b23635vj1j0cuxx",
+            "section": "Loge 19",
+            "seat": "28",
+            "row": "1",
+            "packageId": null,
+            "partOfSeasonToken": false,
+            "partOfSeasonTokenGoodsId": null,
+            "partOfTableReservation": true,
+            "canBePlacedAtTable": true,
+            "restaurantId": "1",
+            "tags": [
+              "loge19"
+            ]
+          },
+          {
+            "goodsid": "XXZ4-5H1-3-73247523",
+            "name": "Loge 19",
+            "receipttext": "Loge 19 (entré L)",
+            "type": "Ticket",
+            "artno": "XXZ4-5H1",
+            "priceIncVatAfterDiscount": "0",
+            "vatPortion": "0",
+            "vatPercent": "0.06",
+            "eventId": "b23635vj1j0cuxx",
+            "section": "Loge 19",
+            "seat": "27",
+            "row": "1",
+            "packageId": null,
+            "partOfSeasonToken": false,
+            "partOfSeasonTokenGoodsId": null,
+            "partOfTableReservation": true,
+            "canBePlacedAtTable": true,
+            "restaurantId": "1",
+            "tags": [
+              "loge19"
+            ]
+          }
+        ],
+        "additionalinputfields": []
+      }
+    }
+  ]
+}

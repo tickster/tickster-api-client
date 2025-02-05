@@ -1,7 +1,7 @@
 ﻿using Tickster.Api.Models.Crm;
 
 namespace Tickster.Api.Test.Unit.Crm;
-public class TestCrmRequest : MockAgentBase
+public class TestCrmResponseData : MockAgentBase
 {
     [Fact]
     public async Task GetCrmPurchasesAsync_ValidateResponse()
