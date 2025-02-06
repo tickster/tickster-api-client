@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TicksterSampleApp.Importer;
+using TicksterSampleApp.Importer.Importers;
 using TicksterSampleApp.Infrastructure.Configuration;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);

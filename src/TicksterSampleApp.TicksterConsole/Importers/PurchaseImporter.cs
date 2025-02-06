@@ -2,7 +2,7 @@
 using TicksterSampleApp.Domain.Models;
 using TicksterSampleApp.Infrastructure.Contexts;
 
-namespace TicksterSampleApp.Importer;
+namespace TicksterSampleApp.Importer.Importers;
 
 public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter CustomerImporter, EventImporter EventImporter, GoodsImporter GoodsImporter, CampaignImporter CampaignImporter)
 {

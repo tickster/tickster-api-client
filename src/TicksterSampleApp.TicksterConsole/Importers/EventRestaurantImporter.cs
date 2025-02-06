@@ -1,7 +1,7 @@
 ﻿using TicksterSampleApp.Domain.Models;
 using TicksterSampleApp.Infrastructure.Contexts;
 
-namespace TicksterSampleApp.Importer;
+namespace TicksterSampleApp.Importer.Importers;
 
 public class EventRestaurantImporter(SampleAppContext dbContext)
 {
