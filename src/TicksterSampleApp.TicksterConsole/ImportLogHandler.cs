@@ -12,15 +12,15 @@ public class ImportLogHandler(IOptions<TicksterCrmConfig> options, SampleAppCont
 
     public async Task WriteToImportLog(int crmId)
     {
-        var importLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
+        var dbImportLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
 
-        if (importLog == null)
+        if (dbImportLog == null)
         {
             await dbContext.ImportLogs.AddAsync(new ImportLog { ApiKey = ApiKey, Date = DateTime.Now, LastTicksterCrmId = crmId });
         }
         else
         {
-            dbContext.Remove(importLog);
+            dbContext.Remove(dbImportLog);
             await dbContext.ImportLogs.AddAsync(new ImportLog { ApiKey = ApiKey, Date = DateTime.Now, LastTicksterCrmId = crmId });
         }
 
@@ -29,8 +29,8 @@ public class ImportLogHandler(IOptions<TicksterCrmConfig> options, SampleAppCont
 
     public async Task<int> GetLastCrmId()
     {
-        var importLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
+        var dbImportLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
 
-        return importLog?.LastTicksterCrmId ?? 0;
+        return dbImportLog?.LastTicksterCrmId ?? 0;
     }
 }

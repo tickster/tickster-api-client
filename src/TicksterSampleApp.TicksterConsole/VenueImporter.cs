@@ -6,29 +6,29 @@ namespace TicksterSampleApp.Importer;
 
 public class VenueImporter(SampleAppContext dbContext)
 {
-    public async Task Import(Tickster.Api.Models.Crm.Venue crmVenue, Event dbEvent)
+    public async Task Import(Tickster.Api.Models.Crm.Venue crmVenue, Event mappedEvent)
     {
-        var dbVenue = await AddOrUpdateVenue(crmVenue);
-        dbEvent.VenueId = dbVenue.Id;
+        var mappedVenue = await AddOrUpdateVenue(crmVenue);
+        mappedEvent.VenueId = mappedVenue.Id;
 
         await dbContext.SaveChangesAsync();
     }
 
     private async Task<Venue> AddOrUpdateVenue(Tickster.Api.Models.Crm.Venue crmVenue)
     {
-        var venue = await dbContext.Venues.SingleOrDefaultAsync(v => v.TicksterVenueId == crmVenue.Id);
+        var dbVenue = await dbContext.Venues.SingleOrDefaultAsync(v => v.TicksterVenueId == crmVenue.Id);
 
-        Venue dbVenue;
-        if (venue == null)
+        Venue mappedVenue;
+        if (dbVenue == null)
         {
-            dbVenue = Mapper.MapVenue(crmVenue);
-            await dbContext.AddAsync(dbVenue);
+            mappedVenue = Mapper.MapVenue(crmVenue);
+            await dbContext.AddAsync(mappedVenue);
         }
         else
         {
-            dbVenue = Mapper.MapVenue(crmVenue, venue);
+            mappedVenue = Mapper.MapVenue(crmVenue, dbVenue);
         }
 
-        return dbVenue;
+        return mappedVenue;
     }
 }

@@ -5,9 +5,9 @@ namespace TicksterSampleApp.Importer;
 
 public class PurchaseCampaignImporter(SampleAppContext dbContext)
 {
-    public async Task CreatePurchaseCampaignLink(Purchase dbPurchase, Campaign dbCampaign)
+    public async Task CreatePurchaseCampaignLink(Purchase dbPurchase, Campaign mappedCampaign)
     {
-        var campaignKey = BuildCampaignKey(dbCampaign);
+        var campaignKey = BuildCampaignKey(mappedCampaign);
         var purchaseCampaign = await dbContext.PurchaseCampaignLookup.FindAsync(dbPurchase.Id, campaignKey);
 
         if (purchaseCampaign == null)
@@ -17,6 +17,6 @@ public class PurchaseCampaignImporter(SampleAppContext dbContext)
         }
     }
 
-    private string BuildCampaignKey(Campaign dbCampaign)
-        => dbCampaign.TicksterCampaignId + dbCampaign.TicksterCommunicationId;
+    private string BuildCampaignKey(Campaign mappedCampaign)
+        => mappedCampaign.TicksterCampaignId + mappedCampaign.TicksterCommunicationId;
 }

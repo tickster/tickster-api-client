@@ -6,13 +6,13 @@ namespace TicksterSampleApp.Importer;
 
 public class RestaurantImporter(SampleAppContext dbContext, EventRestaurantImporter EventRestaurantImporter)
 {
-    public async Task Import(Event dbEvent, List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants)
+    public async Task Import(Event mappedEvent, List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants)
     {
         foreach (var crmRestaurant in crmRestaurants)
         {
-            var dbRestaurant = await AddOrUpdateRestaurant(crmRestaurant);
+            var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant);
 
-            await EventRestaurantImporter.CreateEventRestaurantLink(dbEvent, dbRestaurant);
+            await EventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
 
             await dbContext.SaveChangesAsync();
         }
@@ -20,19 +20,19 @@ public class RestaurantImporter(SampleAppContext dbContext, EventRestaurantImpor
 
     private async Task<Restaurant> AddOrUpdateRestaurant(Tickster.Api.Models.Crm.Restaurant crmRestaurant)
     {
-        var restaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.RestaurantId == crmRestaurant.RestaurantId);
+        var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.RestaurantId == crmRestaurant.RestaurantId);
 
-        Restaurant dbRestaurant;
-        if (restaurant == null)
+        Restaurant mappedRestaurant;
+        if (dbRestaurant == null)
         {
-            dbRestaurant = Mapper.MapRestaurant(crmRestaurant);
-            await dbContext.AddAsync(dbRestaurant);
+            mappedRestaurant = Mapper.MapRestaurant(crmRestaurant);
+            await dbContext.AddAsync(mappedRestaurant);
         }
         else
         {
-            dbRestaurant = Mapper.MapRestaurant(crmRestaurant, restaurant);
+            mappedRestaurant = Mapper.MapRestaurant(crmRestaurant, dbRestaurant);
         }
 
-        return dbRestaurant;
+        return mappedRestaurant;
     }
 }

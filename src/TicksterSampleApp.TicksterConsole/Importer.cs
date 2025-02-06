@@ -6,12 +6,12 @@ public class Importer(TicksterClient client, ImportLogHandler ImportLogHandler, 
 {    
     public async Task Import(int crmId)
     {
-        var purchases = await client.GetCrmPurchasesAsync(crmId);
+        var crmPurchases = await client.GetCrmPurchasesAsync(crmId);
 
-        foreach (var purchase in purchases)
+        foreach (var crmPurchase in crmPurchases)
         {
-            await PurchaseImporter.Import(purchase);
-            await ImportLogHandler.WriteToImportLog(purchase.CrmId);
+            await PurchaseImporter.Import(crmPurchase);
+            await ImportLogHandler.WriteToImportLog(crmPurchase.CrmId);
         }        
     }
 }

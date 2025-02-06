@@ -5,13 +5,13 @@ namespace TicksterSampleApp.Importer;
 
 public class CampaignImporter(SampleAppContext dbContext, PurchaseCampaignImporter PurchaseCampaignImporter)
 {
-    public async Task Import(Purchase dbPurchase, List<Tickster.Api.Models.Crm.Campaign> crmCampaigns)
+    public async Task Import(Purchase mappedPurchase, List<Tickster.Api.Models.Crm.Campaign> crmCampaigns)
     {
         foreach (var crmCampaign in crmCampaigns)
         {
-            var dbCampaign = await AddOrUpdateCampaign(crmCampaign);
+            var mappedCampaign = await AddOrUpdateCampaign(crmCampaign);
 
-            await PurchaseCampaignImporter.CreatePurchaseCampaignLink(dbPurchase, dbCampaign);
+            await PurchaseCampaignImporter.CreatePurchaseCampaignLink(mappedPurchase, mappedCampaign);
 
             await dbContext.SaveChangesAsync();
         }
@@ -19,19 +19,19 @@ public class CampaignImporter(SampleAppContext dbContext, PurchaseCampaignImport
 
     private async Task<Campaign> AddOrUpdateCampaign(Tickster.Api.Models.Crm.Campaign crmCampaign)
     {
-        var campaign = await dbContext.Campaigns.FindAsync(crmCampaign.Id, crmCampaign.CommunicationId);
+        var dbCampaign = await dbContext.Campaigns.FindAsync(crmCampaign.Id, crmCampaign.CommunicationId);
 
-        Campaign dbCampaign;
-        if (campaign == null)
+        Campaign mappedCampaign;
+        if (dbCampaign == null)
         {
-            dbCampaign = Mapper.MapCampaign(crmCampaign);
-            await dbContext.AddAsync(dbCampaign);
+            mappedCampaign = Mapper.MapCampaign(crmCampaign);
+            await dbContext.AddAsync(mappedCampaign);
         }
         else
         {
-            dbCampaign = Mapper.MapCampaign(crmCampaign, campaign);
+            mappedCampaign = Mapper.MapCampaign(crmCampaign, dbCampaign);
         }
 
-        return dbCampaign;
+        return mappedCampaign;
     }
 }

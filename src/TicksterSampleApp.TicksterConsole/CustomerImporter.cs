@@ -6,30 +6,30 @@ namespace TicksterSampleApp.Importer;
 
 public class CustomerImporter(SampleAppContext dbContext)
 {
-    public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase, Purchase dbPurchase)
+    public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase, Purchase mappedPurchase)
     {
-        var dbCustomer = await AddOrUpdateCustomer(crmPurchase);
-        dbPurchase.CustomerId = dbCustomer.Id;
+        var mappedCustomer = await AddOrUpdateCustomer(crmPurchase);
+        mappedPurchase.CustomerId = mappedCustomer.Id;
 
         await dbContext.SaveChangesAsync();
     }
 
     private async Task<Customer> AddOrUpdateCustomer(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
-        var customer = await dbContext.Customers
+        var dbCustomer = await dbContext.Customers
             .SingleOrDefaultAsync(c => c.TicksterUserRefNo == crmPurchase.UserRefNo);
 
-        Customer dbCustomer;
-        if (customer == null)
+        Customer mappedCustomer;
+        if (dbCustomer == null)
         {
-            dbCustomer = Mapper.MapCustomer(crmPurchase);
-            await dbContext.AddAsync(dbCustomer);
+            mappedCustomer = Mapper.MapCustomer(crmPurchase);
+            await dbContext.AddAsync(mappedCustomer);
         }
         else
         {
-            dbCustomer = Mapper.MapCustomer(crmPurchase, customer);
+            mappedCustomer = Mapper.MapCustomer(crmPurchase, dbCustomer);
         }
 
-        return dbCustomer;
+        return mappedCustomer;
     }
 }

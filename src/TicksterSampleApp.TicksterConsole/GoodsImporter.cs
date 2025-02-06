@@ -6,17 +6,17 @@ namespace TicksterSampleApp.Importer;
 
 public class GoodsImporter(SampleAppContext dbContext)
 {
-    public async Task Import(Purchase dbPurchase, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
+    public async Task Import(Purchase mappedPurchase, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
     {
-        dbContext.Goods.RemoveRange(dbContext.Goods.Where(g => g.PurchaseId == dbPurchase.Id));
+        dbContext.Goods.RemoveRange(dbContext.Goods.Where(g => g.PurchaseId == mappedPurchase.Id));
 
         foreach (var crmGood in crmGoods)
         {
-            var dbGoods = Mapper.MapGoods(crmGood);
-            await dbContext.AddAsync(dbGoods);
+            var mappedGoods = Mapper.MapGoods(crmGood);
+            await dbContext.AddAsync(mappedGoods);
 
-            dbGoods.PurchaseId = dbPurchase.Id;
-            dbGoods.EventId = await GetRelatedEventId(dbGoods.TicksterEventId);
+            mappedGoods.PurchaseId = mappedPurchase.Id;
+            mappedGoods.EventId = await GetRelatedEventId(mappedGoods.TicksterEventId);
 
             await dbContext.SaveChangesAsync();
         }

@@ -8,37 +8,37 @@ public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter Custo
 {
     public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
-        var dbPurchase = await AddOrUpdatePurchase(crmPurchase);
+        var mappedPurchase = await AddOrUpdatePurchase(crmPurchase);
 
-        await CustomerImporter.Import(crmPurchase, dbPurchase);
+        await CustomerImporter.Import(crmPurchase, mappedPurchase);
 
         await EventImporter.Import(crmPurchase.Events);
 
-        await GoodsImporter.Import(dbPurchase, crmPurchase.Goods);
+        await GoodsImporter.Import(mappedPurchase, crmPurchase.Goods);
 
-        await CampaignImporter.Import(dbPurchase, crmPurchase.Campaigns);
+        await CampaignImporter.Import(mappedPurchase, crmPurchase.Campaigns);
 
         await dbContext.SaveChangesAsync();
     }
 
     private async Task<Purchase> AddOrUpdatePurchase(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
-        var purchase = await dbContext.Purchases
+        var dbPurchase = await dbContext.Purchases
             .AsNoTracking()
             .SingleOrDefaultAsync(p => p.TicksterPurchaseRefNo == crmPurchase.PurchaseRefno);
 
-        Purchase dbPurchase;
-        if (purchase == null)
+        Purchase mappedPurchase;
+        if (dbPurchase == null)
         {
-            dbPurchase = Mapper.MapPurchase(crmPurchase);
-            await dbContext.AddAsync(dbPurchase);
+            mappedPurchase = Mapper.MapPurchase(crmPurchase);
+            await dbContext.AddAsync(mappedPurchase);
         }
         else
         {
-            dbPurchase = Mapper.MapPurchase(crmPurchase, purchase);
+            mappedPurchase = Mapper.MapPurchase(crmPurchase, dbPurchase);
             await dbContext.SaveChangesAsync();
         }
 
-        return dbPurchase;
+        return mappedPurchase;
     }
 }
