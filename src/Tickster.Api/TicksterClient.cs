@@ -6,10 +6,12 @@ using Tickster.Api.Dtos;
 using Tickster.Api.Models;
 
 namespace Tickster.Api;
+
 public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgent agent)
 {
     private readonly TicksterOptions _options = options.Value;
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new() {
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
         PropertyNameCaseInsensitive = true,
         Converters = { new JsonStringEnumConverter() },
     };
@@ -18,26 +20,48 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
     public RateLimitInfo RateLimitInfo => Agent.RateLimitInfo;
 
     public async Task<IEnumerable<Purchase>> GetCrmPurchasesAsync(
-        int purchaseId, 
-        int? limit = null, 
-        string? lang = null, 
-        bool includeAllAccounts = true)
+        int purchaseId,
+        int? limit = null,
+        string? lang = null,
+        GetCrmPurchasesOptions? options = null)
     {
         lang ??= _options.DefaultLanguage;
         limit ??= _options.DefaultResultLimit;
+        options ??= new();
 
         var json = await Agent.MakeCrmRequest(
-            endpoint: string.Empty, 
+            endpoint: string.Empty,
             fromPurchase: purchaseId,
             resultLimit: (int)limit,
             lang: lang,
-            loadChildEogData: includeAllAccounts);
+            loadChildEogData: options.IncludeAllAccounts);
 
-        var result = ParseJsonResponse<CrmPurchaseLogResponse>(json);
+        var purchaseResponse = ParseJsonResponse<CrmPurchaseLogResponse>(json);
 
-        return result.Purchases.Select(p => p.Purchase);
+        ProcessPurchaseResponse(purchaseResponse, options);
+
+        return purchaseResponse.Purchases.Select(p => p.Purchase);
     }
 
     private T ParseJsonResponse<T>(string json)
         => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions)!;
+
+    private static void ProcessPurchaseResponse(CrmPurchaseLogResponse purchaseResponse, GetCrmPurchasesOptions options)
+    {
+        if (options.SuppressUnsyncedRefunds)
+        {
+            // FIXME: If we are to perform other operations on the purchases before returning them:
+            //  - Mind the order in which thse operations are applied
+            //  - Consider using materialising Purchases to a List<Purchase> to avoid multiple enumerations
+            purchaseResponse.Purchases = purchaseResponse.Purchases
+                .Where(w => !(w.Purchase.Status == PurchaseStatus.Completed && w.Purchase.Goods.Count == 0));
+        }
+    }
+}
+
+public class GetCrmPurchasesOptions
+{
+    public bool IncludeAllAccounts { get; set; } = true;
+    public bool SuppressUnsyncedRefunds { get; set; } = true;
+
 }
