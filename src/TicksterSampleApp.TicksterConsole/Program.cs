@@ -15,7 +15,7 @@ builder.Services
 
 using IHost host = builder.Build();
 
-int lastCrmId = await host.Services.GetRequiredService<ImportLogHandler>().GetLastCrmId();
+var lastCrmId = await host.Services.GetRequiredService<ImportLogHandler>().GetLastCrmId();
 await host.Services.GetRequiredService<Importer>().Import(lastCrmId);
 
 await host.RunAsync();
