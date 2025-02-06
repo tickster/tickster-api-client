@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using TicksterSampleApp.Domain.Models;
+using TicksterSampleApp.Infrastructure.Configuration;
 using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer;
 
-public class ImportLogHandler(IConfiguration configuration, SampleAppContext dbContext)
+public class ImportLogHandler(IOptions<TicksterCrmConfig> options, SampleAppContext dbContext)
 {
-    private readonly string ApiKey = configuration["Tickster:CrmApi:ApiKey"];
+    private readonly string ApiKey = options.Value.ApiKey;
 
-    public async Task WriteToImportLogAsync(int crmId)
+    public async Task WriteToImportLog(int crmId)
     {
         var importLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
 

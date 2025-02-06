@@ -10,24 +10,31 @@ public class EventImporter(SampleAppContext dbContext, RestaurantImporter Restau
     {
         foreach (var crmEvent in crmEvents)
         {
-            var ev = await dbContext.Events.SingleOrDefaultAsync(e => e.TicksterEventId == crmEvent.Id);
+            var dbEvent = await AddOrUpdateEvent(crmEvent);
 
-            Event mappedEvent;
-            if (ev == null)
-            {
-                mappedEvent = Mapper.MapEvent(crmEvent);
-                await dbContext.AddAsync(mappedEvent);            
-            }
-            else
-            {
-                mappedEvent = Mapper.MapEvent(crmEvent, ev);
-            }
+            await RestaurantImporter.Import(dbEvent, crmEvent.Restaurants);
 
-            await RestaurantImporter.Import(mappedEvent.Id, crmEvent.Restaurants);     
-            
-            mappedEvent.VenueId = await VenueImporter.Import(crmEvent.Venue);
+            await VenueImporter.Import(crmEvent.Venue, dbEvent);
 
             await dbContext.SaveChangesAsync();
         }
+    }
+
+    private async Task<Event> AddOrUpdateEvent(Tickster.Api.Models.Crm.Event crmEvent)
+    {
+        var ev = await dbContext.Events.SingleOrDefaultAsync(e => e.TicksterEventId == crmEvent.Id);
+
+        Event dbEvent;
+        if (ev == null)
+        {
+            dbEvent = Mapper.MapEvent(crmEvent);
+            await dbContext.AddAsync(dbEvent);
+        }
+        else
+        {
+            dbEvent = Mapper.MapEvent(crmEvent, ev);
+        }
+
+        return dbEvent;
     }
 }

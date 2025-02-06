@@ -2,7 +2,7 @@
 
 namespace TicksterSampleApp.Importer;
 
-internal class Importer(TicksterClient client, ImportLogHandler ImportLogHandler, PurchaseImporter PurchaseImporter)
+public class Importer(TicksterClient client, ImportLogHandler ImportLogHandler, PurchaseImporter PurchaseImporter)
 {    
     public async Task Import(int crmId)
     {
@@ -11,7 +11,7 @@ internal class Importer(TicksterClient client, ImportLogHandler ImportLogHandler
         foreach (var purchase in purchases)
         {
             await PurchaseImporter.Import(purchase);
-            await ImportLogHandler.WriteToImportLogAsync(purchase.CrmId);
+            await ImportLogHandler.WriteToImportLog(purchase.CrmId);
         }        
     }
 }

@@ -6,24 +6,30 @@ namespace TicksterSampleApp.Importer;
 
 public class CustomerImporter(SampleAppContext dbContext)
 {
-    public async Task<Guid> Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
+    public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase, Purchase dbPurchase)
+    {
+        var dbCustomer = await AddOrUpdateCustomer(crmPurchase);
+        dbPurchase.CustomerId = dbCustomer.Id;
+
+        await dbContext.SaveChangesAsync();
+    }
+
+    private async Task<Customer> AddOrUpdateCustomer(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
         var customer = await dbContext.Customers
             .SingleOrDefaultAsync(c => c.TicksterUserRefNo == crmPurchase.UserRefNo);
 
-        Customer mappedCustomer;
+        Customer dbCustomer;
         if (customer == null)
         {
-            mappedCustomer = Mapper.MapCustomer(crmPurchase);
-            await dbContext.AddAsync(mappedCustomer);
+            dbCustomer = Mapper.MapCustomer(crmPurchase);
+            await dbContext.AddAsync(dbCustomer);
         }
         else
         {
-            mappedCustomer = Mapper.MapCustomer(crmPurchase, customer);
+            dbCustomer = Mapper.MapCustomer(crmPurchase, customer);
         }
 
-        await dbContext.SaveChangesAsync();
-
-        return mappedCustomer.Id;
+        return dbCustomer;
     }
 }

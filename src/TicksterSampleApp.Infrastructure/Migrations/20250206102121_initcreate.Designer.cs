@@ -11,7 +11,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 namespace TicksterSampleApp.Infrastructure.Migrations
 {
     [DbContext(typeof(SampleAppContext))]
-    [Migration("20250205130108_initcreate")]
+    [Migration("20250206102121_initcreate")]
     partial class initcreate
     {
         /// <inheritdoc />

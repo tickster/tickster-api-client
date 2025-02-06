@@ -8,20 +8,9 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddUserSecrets<Program>();
 
-// Create add Importer method
 builder.Services
     .AddInfrastructureServices(builder.Configuration)
-    .AddTransient<Importer>()
-    .AddTransient<ImportLogHandler>()
-    .AddScoped<PurchaseImporter>()
-    .AddScoped<EventImporter>()
-    .AddScoped<RestaurantImporter>()
-    .AddScoped<VenueImporter>()
-    .AddScoped<GoodsImporter>()
-    .AddScoped<CampaignImporter>()
-    .AddScoped<PurchaseCampaignImporter>()
-    .AddScoped<CustomerImporter>()
-    .AddScoped<EventRestaurantImporter>();
+    .AddImporterServices();
 
 using IHost host = builder.Build();
 

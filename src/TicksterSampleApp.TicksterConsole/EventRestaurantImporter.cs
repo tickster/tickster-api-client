@@ -5,19 +5,15 @@ namespace TicksterSampleApp.Importer;
 
 public class EventRestaurantImporter(SampleAppContext dbContext)
 {
-    public async Task WriteToEventRestaurantLookUpTableAsync(Guid eventId, Guid restaurantId)
+    public async Task CreateEventRestaurantLink(Event dbEvent, Restaurant dbRestaurant)
     {
-        var eventRestaurant = await dbContext.EventRestaurants.FindAsync(eventId, restaurantId);
+        var eventRestaurant = await dbContext.EventRestaurants.FindAsync(dbEvent.Id, dbRestaurant.Id);
 
         if (eventRestaurant == null)
         {
-            var mappedEventRestaurant = new EventRestaurant()
-            {
-                EventId = eventId,
-                RestaurantId = restaurantId
-            };
+            var dbEventRestaurant = Mapper.MapEventRestaurant(dbEvent, dbRestaurant);
 
-            await dbContext.AddAsync(mappedEventRestaurant);
+            await dbContext.AddAsync(dbEventRestaurant);
         }
     }
 }

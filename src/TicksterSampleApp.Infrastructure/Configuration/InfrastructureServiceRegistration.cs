@@ -12,18 +12,20 @@ public static class InfrastructureServiceRegistration
     {
         AddSqliteDbContext(services, configuration["SqliteDbName"]);
 
-        services.Configure<TicksterCrmConfig>(
-            configuration.GetSection("Tickster:CrmApi")
-        );
+        var crmConfig = configuration.GetSection("Tickster:CrmApi").Get<TicksterCrmConfig>();
 
-        services.AddTicksterClient(options =>
+        services.Configure<TicksterCrmConfig>(
+                configuration.GetSection("Tickster:CrmApi")
+            );
+
+        services.AddTicksterClient(clientOptions =>
         {
-            var crmConfig = configuration.GetSection("Tickster:CrmApi").Get<TicksterCrmConfig>();
-            options.Endpoint = crmConfig.Endpoint;
-            options.ApiKey = crmConfig.ApiKey;
-            options.EogRequestCode = crmConfig.EogRequestCode;
-            options.Login = crmConfig.Login;
-            options.Password = crmConfig.Password;
+
+            clientOptions.Endpoint = crmConfig!.Endpoint;
+            clientOptions.ApiKey = crmConfig!.ApiKey;
+            clientOptions.EogRequestCode = crmConfig!.EogRequestCode;
+            clientOptions.Login = crmConfig!.Login;
+            clientOptions.Password = crmConfig!.Password;
         });
 
         return services;

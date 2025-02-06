@@ -52,28 +52,6 @@ public static class Mapper
         return dbGoods;
     }
 
-    public static Goods MapGoods(Tickster.Api.Models.Crm.GoodsItem goods, Guid eventId)
-        => new()
-        {
-            TicksterGoodsId = goods.GoodsId,
-            Name = goods.Name,
-            ReceiptText = goods.ReceiptText,
-            Type = GoodsTypeExtensions.FromString(goods.Type.ToString()),
-            ArticleNumber = goods.ArtNo,
-            PriceIncVatAfterDiscount = goods.PriceIncVatAfterDiscount,
-            VatPortion = goods.VatPortion,
-            VatPercent = goods.VatPercent,
-            Section = goods.Section ?? "",
-            Seat = int.Parse(goods.Seat ?? "0"),
-            Row = int.Parse(goods.Row ?? "0"),
-            PartOfSeasonToken = goods.PartOfSeasonToken,
-            PartOfSeasonTokenGoodsId = goods.PartOfSeasonTokenGoodsId ?? "",
-            PartOfTableReservation = goods.PartOfTableReservation,
-            CanBePlacedAtTable = goods.CanBePlacedAtTable,
-            TicksterEventId = goods.EventId,
-            EventId = eventId
-        };
-
     public static Event MapEvent(Tickster.Api.Models.Crm.Event ev)
         => MapEvent(ev, new Event());
 
@@ -154,10 +132,17 @@ public static class Mapper
         return dbRestaurant;
     }
 
-    public static PurchaseCampaign MapPurchaseCampaign(Guid purchaseId, string campaignId)
+    public static PurchaseCampaign MapPurchaseCampaign(Purchase dbPurchase, string campaignId)
         => new()
         {
-            PurchaseId = purchaseId,
+            PurchaseId = dbPurchase.Id,
             CampaignId = campaignId
+        };
+
+    public static EventRestaurant MapEventRestaurant(Event dbEvent, Restaurant dbRestaurant)
+        => new()
+        {
+            EventId = dbEvent.Id,
+            RestaurantId = dbRestaurant.Id
         };
 }

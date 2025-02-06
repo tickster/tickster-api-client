@@ -1,26 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TicksterSampleApp.Domain.Models;
 using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer;
 
 public class GoodsImporter(SampleAppContext dbContext)
 {
-    public async Task Import(Guid purchaseId, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
+    public async Task Import(Purchase dbPurchase, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
     {
+        dbContext.Goods.RemoveRange(dbContext.Goods.Where(g => g.PurchaseId == dbPurchase.Id));
+
         foreach (var crmGood in crmGoods)
         {
-            var mappedGoods = Mapper.MapGoods(crmGood);
-            await dbContext.AddAsync(mappedGoods);
+            var dbGoods = Mapper.MapGoods(crmGood);
+            await dbContext.AddAsync(dbGoods);
 
-            mappedGoods.PurchaseId = purchaseId;
-            mappedGoods.EventId = await GetRelatedEventId(mappedGoods.TicksterEventId);
+            dbGoods.PurchaseId = dbPurchase.Id;
+            dbGoods.EventId = await GetRelatedEventId(dbGoods.TicksterEventId);
 
             await dbContext.SaveChangesAsync();
         }
     }
 
     private async Task<Guid?> GetRelatedEventId(string ticksterEventId)
-    {
-        return (await dbContext.Events.SingleOrDefaultAsync(e => e.TicksterEventId == ticksterEventId))?.Id;
-    }
+        => (await dbContext.Events.SingleOrDefaultAsync(e => e.TicksterEventId == ticksterEventId))?.Id;
 }
