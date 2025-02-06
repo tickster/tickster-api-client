@@ -14,9 +14,9 @@ public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter Custo
 
         await EventImporter.Import(crmPurchase.Events);
 
-        await GoodsImporter.Import(mappedPurchase, crmPurchase.Goods);
+        await GoodsImporter.Import(crmPurchase.Goods, mappedPurchase);
 
-        await CampaignImporter.Import(mappedPurchase, crmPurchase.Campaigns);
+        await CampaignImporter.Import(crmPurchase.Campaigns, mappedPurchase);
 
         await dbContext.SaveChangesAsync();
     }

@@ -6,7 +6,7 @@ namespace TicksterSampleApp.Importer.Importers;
 
 public class GoodsImporter(SampleAppContext dbContext)
 {
-    public async Task Import(Purchase mappedPurchase, List<Tickster.Api.Models.Crm.GoodsItem> crmGoods)
+    public async Task Import(List<Tickster.Api.Models.Crm.GoodsItem> crmGoods, Purchase mappedPurchase)
     {
         dbContext.Goods.RemoveRange(dbContext.Goods.Where(g => g.PurchaseId == mappedPurchase.Id));
 

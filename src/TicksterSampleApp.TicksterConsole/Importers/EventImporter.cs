@@ -12,7 +12,7 @@ public class EventImporter(SampleAppContext dbContext, RestaurantImporter Restau
         {
             var mappedEvent = await AddOrUpdateEvent(crmEvent);
 
-            await RestaurantImporter.Import(mappedEvent, crmEvent.Restaurants);
+            await RestaurantImporter.Import(crmEvent.Restaurants, mappedEvent);
 
             await VenueImporter.Import(crmEvent.Venue, mappedEvent);
 
