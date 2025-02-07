@@ -5,16 +5,10 @@ namespace TicksterSampleApp.Infrastructure.Contexts;
 
 public partial class SampleAppContext : DbContext
 {
-    public DbSet<Venue> Venue { get; set; }
+    public DbSet<Venue> Venues { get; set; }
 
     public void OnModelCreatingVenue(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Venue>()
-            .HasMany(v => v.Restaurants)
-            .WithOne(r => r.Venue)
-            .HasForeignKey(r => r.VenueId)
-            .HasPrincipalKey(v => v.Id);
-
         modelBuilder.Entity<Venue>()
             .Property(v => v.TicksterVenueId)
             .HasColumnType("varchar(20)");

@@ -27,7 +27,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
 
         var crmRequestUrl = new UriBuilder(HttpClient.BaseAddress!)
         {
-            Path = $"/api/{lang}/0.4/crm/{_eogRequestCode}",
+            Path = $"{lang}/api/0.4/crm/{_eogRequestCode}",
             Query = $"key={GetApiKey()}"
         };
 

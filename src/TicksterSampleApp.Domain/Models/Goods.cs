@@ -4,12 +4,13 @@ namespace TicksterSampleApp.Domain.Models;
 
 public class Goods
 {
-    public Purchase Purchase { get; set; } = new();
-    public Restaurant Restaurant { get; set; } = new();
-    public Event Event { get; set; } = new();
-    public int Id { get; set; }
-    public string GoodsId { get; set; } = string.Empty;
-    public int PurchaseId { get; set; }
+    public Guid? PurchaseId { get; set; }
+    public Purchase Purchase { get; set; } = null!;
+    public Guid? EventId { get; set; }
+    public Event? Event { get; set; }
+    public string TicksterEventId { get; set; } = string.Empty;
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string TicksterGoodsId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string ReceiptText { get; set; } = string.Empty;
     public GoodsType Type { get; set; }
@@ -17,7 +18,6 @@ public class Goods
     public decimal PriceIncVatAfterDiscount { get; set; }
     public decimal VatPortion { get; set; }
     public decimal VatPercent { get; set; }
-    public int EventId { get; set; }
     public string Section { get; set; } = string.Empty;
     public int Seat { get; set; }
     public int Row { get; set; }
@@ -25,5 +25,5 @@ public class Goods
     public string PartOfSeasonTokenGoodsId { get; set; } = string.Empty;
     public bool PartOfTableReservation { get; set; }
     public bool CanBePlacedAtTable { get; set; }
-    public int RestaurantId { get; set; }
+    public Guid? RestaurantId { get; set; }
 }

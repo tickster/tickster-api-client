@@ -45,7 +45,7 @@ public class MyService
 
     public async Task DoSomethingAsync()
     {
-        var purchases = await _client.GetCrmPurchases(1234);
+        var purchases = await _client.GetCrmPurchasesAsync(1234);
     }
 }
 ```

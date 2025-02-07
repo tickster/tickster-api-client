@@ -1,9 +1,8 @@
 ﻿namespace Tickster.Api.Models.Crm;
 public class Campaign
 {
-    public int PurchId { get; set; }
-    public string CampaignRequestCode { get; set; } = string.Empty;
-    public string CampaignCommunicationRequestCode { get; set; } = string.Empty;
-    public string CampaignActivationCode { get; set; } = string.Empty;
-    public string EogInternalRefNo { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty;    
+    public string CommunicationId { get; set; } = string.Empty; // Can be empty for "automatic campaign"
+    public string ActivationCode { get; set; } = string.Empty;
+    public string InternalReference { get; set; } = string.Empty; 
 }

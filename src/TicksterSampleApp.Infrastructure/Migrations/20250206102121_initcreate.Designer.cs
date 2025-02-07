@@ -11,8 +11,8 @@ using TicksterSampleApp.Infrastructure.Contexts;
 namespace TicksterSampleApp.Infrastructure.Migrations
 {
     [DbContext(typeof(SampleAppContext))]
-    [Migration("20250120163010_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250206102121_initcreate")]
+    partial class initcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,19 +22,13 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Campaign", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ActivationCode")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
-
                     b.Property<string>("TicksterCampaignId")
-                        .IsRequired()
                         .HasColumnType("varchar(10)");
 
                     b.Property<string>("TicksterCommunicationId")
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("ActivationCode")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
@@ -42,58 +36,48 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TicksterCampaignId", "TicksterCommunicationId");
 
-                    b.ToTable("Campaign");
+                    b.ToTable("Campaigns");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
                         .HasColumnType("varchar(200)");
 
                     b.Property<string>("CountryCode")
-                        .IsRequired()
                         .HasColumnType("char(2)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("IdNumber")
-                        .IsRequired()
                         .HasColumnType("varchar(50)");
 
                     b.Property<bool>("IsCompany")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("MobilePhone")
-                        .IsRequired()
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("PostalAddressLineOne")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("PostalAddressLineTwo")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("TicksterUserRefNo")
@@ -101,19 +85,18 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .HasColumnType("varchar(10)");
 
                     b.Property<string>("ZipCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("End")
                         .HasColumnType("TEXT");
@@ -143,19 +126,34 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("VenueId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("VenueId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Event");
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("TicksterSampleApp.Domain.Models.EventRestaurant", b =>
+                {
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EventId", "RestaurantId");
+
+                    b.ToTable("EventRestaurants");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Goods", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ArticleNumber")
                         .IsRequired()
@@ -164,12 +162,8 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<bool>("CanBePlacedAtTable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GoodsId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -188,15 +182,15 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<decimal>("PriceIncVatAfterDiscount")
                         .HasColumnType("decimal(10, 2)");
 
-                    b.Property<int>("PurchaseId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("PurchaseId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ReceiptText")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("RestaurantId")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Row")
                         .HasColumnType("INTEGER");
@@ -207,6 +201,14 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<string>("Section")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("TicksterEventId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TicksterGoodsId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -224,8 +226,6 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.HasIndex("RestaurantId");
-
                     b.ToTable("Goods");
                 });
 
@@ -237,19 +237,23 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ApiKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("LastTicksterCrmId", "Date");
 
-                    b.ToTable("ImportLog");
+                    b.HasIndex("ApiKey")
+                        .IsUnique();
+
+                    b.ToTable("ImportLogs");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Purchase", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CampaignId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Channel")
                         .IsRequired()
@@ -262,8 +266,8 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("char(3)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("DiscountCode")
                         .IsRequired()
@@ -292,9 +296,8 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
-                    b.Property<string>("TicksterCrmId")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                    b.Property<int>("TicksterCrmId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("TicksterPurchaseRefNo")
                         .IsRequired()
@@ -305,38 +308,47 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CampaignId");
-
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("TicksterSampleApp.Domain.Models.PurchaseCampaign", b =>
+                {
+                    b.Property<Guid>("PurchaseId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CampaignId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PurchaseId", "CampaignId");
+
+                    b.ToTable("PurchaseCampaignLookup");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Restaurant", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RestaurantName")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("VenueId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Restaurant");
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Venue", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -350,10 +362,10 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("char(2)");
 
-                    b.Property<decimal>("Latitude")
+                    b.Property<decimal?>("Latitude")
                         .HasColumnType("decimal(6, 2)");
 
-                    b.Property<decimal>("Longitude")
+                    b.Property<decimal?>("Longitude")
                         .HasColumnType("decimal(6, 2)");
 
                     b.Property<string>("Name")
@@ -370,94 +382,45 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Venue");
+                    b.ToTable("Venues");
+                });
+
+            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Event", b =>
+                {
+                    b.HasOne("TicksterSampleApp.Domain.Models.Venue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId");
+
+                    b.Navigation("Venue");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Goods", b =>
                 {
                     b.HasOne("TicksterSampleApp.Domain.Models.Event", "Event")
-                        .WithMany("Goods")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("EventId");
 
                     b.HasOne("TicksterSampleApp.Domain.Models.Purchase", "Purchase")
                         .WithMany("Goods")
-                        .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TicksterSampleApp.Domain.Models.Restaurant", "Restaurant")
-                        .WithMany("Goods")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PurchaseId");
 
                     b.Navigation("Event");
 
                     b.Navigation("Purchase");
-
-                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Purchase", b =>
                 {
-                    b.HasOne("TicksterSampleApp.Domain.Models.Campaign", "Campaign")
-                        .WithMany("Purchases")
-                        .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicksterSampleApp.Domain.Models.Customer", "Customer")
-                        .WithMany("Purchases")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Campaign");
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Restaurant", b =>
-                {
-                    b.HasOne("TicksterSampleApp.Domain.Models.Venue", "Venue")
-                        .WithMany("Restaurants")
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Venue");
-                });
-
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Campaign", b =>
-                {
-                    b.Navigation("Purchases");
-                });
-
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Customer", b =>
-                {
-                    b.Navigation("Purchases");
-                });
-
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Event", b =>
-                {
-                    b.Navigation("Goods");
-                });
-
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Purchase", b =>
                 {
                     b.Navigation("Goods");
-                });
-
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Restaurant", b =>
-                {
-                    b.Navigation("Goods");
-                });
-
-            modelBuilder.Entity("TicksterSampleApp.Domain.Models.Venue", b =>
-                {
-                    b.Navigation("Restaurants");
                 });
 #pragma warning restore 612, 618
         }

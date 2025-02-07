@@ -5,16 +5,10 @@ namespace TicksterSampleApp.Infrastructure.Contexts;
 
 public partial class SampleAppContext : DbContext
 {
-    public DbSet<Customer> Customer { get; set; }
+    public DbSet<Customer> Customers { get; set; }
 
     public void OnModelCreatingCustomer(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Customer>()
-            .HasMany(c => c.Purchases)
-            .WithOne(p => p.Customer)
-            .HasForeignKey(p => p.CustomerId)
-            .HasPrincipalKey(c => c.Id);
-
         modelBuilder.Entity<Customer>()
             .Property(c => c.TicksterUserRefNo)
             .HasColumnType("varchar(10)");

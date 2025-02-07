@@ -15,5 +15,7 @@ public partial class SampleAppContext(DbContextOptions<SampleAppContext> options
         OnModelCreatingPurchase(modelBuilder);
         OnModelCreatingRestaurant(modelBuilder);
         OnModelCreatingVenue(modelBuilder);
+        OnModelCreatingPurchaseCampaign(modelBuilder);
+        OnModelCreatingEventRestaurant(modelBuilder);
     }
 }
