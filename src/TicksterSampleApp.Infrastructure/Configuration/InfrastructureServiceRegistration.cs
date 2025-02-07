@@ -19,8 +19,7 @@ public static class InfrastructureServiceRegistration
             );
 
         services.AddTicksterClient(clientOptions =>
-        {
-
+        {            
             clientOptions.Endpoint = crmConfig!.Endpoint;
             clientOptions.ApiKey = crmConfig!.ApiKey;
             clientOptions.EogRequestCode = crmConfig!.EogRequestCode;
