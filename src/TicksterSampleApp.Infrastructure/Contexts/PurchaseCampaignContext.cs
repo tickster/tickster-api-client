@@ -5,7 +5,7 @@ namespace TicksterSampleApp.Infrastructure.Contexts;
 
 public partial class SampleAppContext : DbContext
 {
-    public DbSet<PurchaseCampaign> PurchaseCampaignLookup { get; set; }
+    public DbSet<PurchaseCampaign> PurchaseCampaign { get; set; }
 
     private void OnModelCreatingPurchaseCampaign(ModelBuilder modelBuilder)
     {

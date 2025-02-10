@@ -7,6 +7,8 @@ public class CampaignImporter(SampleAppContext dbContext, PurchaseCampaignImport
 {
     public async Task Import(List<Tickster.Api.Models.Crm.Campaign> crmCampaigns, Purchase mappedPurchase)
     {
+        PurchaseCampaignImporter.RemovePurchaseCampaignLinks(mappedPurchase);
+
         foreach (var crmCampaign in crmCampaigns)
         {
             var mappedCampaign = await AddOrUpdateCampaign(crmCampaign);

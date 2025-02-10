@@ -11,7 +11,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 namespace TicksterSampleApp.Infrastructure.Migrations
 {
     [DbContext(typeof(SampleAppContext))]
-    [Migration("20250206102121_initcreate")]
+    [Migration("20250210144636_initcreate")]
     partial class initcreate
     {
         /// <inheritdoc />
@@ -323,7 +323,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.HasKey("PurchaseId", "CampaignId");
 
-                    b.ToTable("PurchaseCampaignLookup");
+                    b.ToTable("PurchaseCampaign");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Restaurant", b =>

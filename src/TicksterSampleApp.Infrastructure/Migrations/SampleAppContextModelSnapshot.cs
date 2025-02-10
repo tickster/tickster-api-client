@@ -320,7 +320,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
 
                     b.HasKey("PurchaseId", "CampaignId");
 
-                    b.ToTable("PurchaseCampaignLookup");
+                    b.ToTable("PurchaseCampaign");
                 });
 
             modelBuilder.Entity("TicksterSampleApp.Domain.Models.Restaurant", b =>
