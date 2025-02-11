@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TicksterSampleApp.Domain.Models;
 using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class EventImporter(SampleAppContext dbContext, RestaurantImporter RestaurantImporter, VenueImporter VenueImporter)
+public class EventImporter(ILogger<EventImporter> _logger, SampleAppContext dbContext, RestaurantImporter RestaurantImporter, VenueImporter VenueImporter)
 {
     public async Task Import(List<Tickster.Api.Models.Crm.Event> crmEvents)
     {
@@ -27,11 +28,13 @@ public class EventImporter(SampleAppContext dbContext, RestaurantImporter Restau
         Event mappedEvent;
         if (dbEvent == null)
         {
+            _logger.LogDebug("New Event ({EventId}) - adding to DB", crmEvent.Id);
             mappedEvent = Mapper.MapEvent(crmEvent);
             await dbContext.AddAsync(mappedEvent);
         }
         else
         {
+            _logger.LogDebug("Event ({EventId}) exists in DB - updating Event", dbEvent.TicksterEventId);
             mappedEvent = Mapper.MapEvent(crmEvent, dbEvent);
         }
 
