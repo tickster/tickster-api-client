@@ -78,7 +78,6 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("TicksterUserRefNo")
-                        .IsRequired()
                         .HasColumnType("varchar(10)");
 
                     b.Property<string>("ZipCode")

@@ -3,7 +3,7 @@
 public class Customer
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public string TicksterUserRefNo { get; set; } = string.Empty;
+    public string? TicksterUserRefNo { get; set; } = string.Empty;
     public string? IdNumber { get; set; } = string.Empty;
     public bool IsCompany { get; set; }
     public string? FirstName { get; set; } = string.Empty;

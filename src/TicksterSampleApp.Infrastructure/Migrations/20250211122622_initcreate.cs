@@ -30,7 +30,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TicksterUserRefNo = table.Column<string>(type: "varchar(10)", nullable: false),
+                    TicksterUserRefNo = table.Column<string>(type: "varchar(10)", nullable: true),
                     IdNumber = table.Column<string>(type: "varchar(50)", nullable: true),
                     IsCompany = table.Column<bool>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "varchar(100)", nullable: true),
