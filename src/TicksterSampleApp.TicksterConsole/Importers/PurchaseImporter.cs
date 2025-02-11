@@ -25,7 +25,6 @@ public class PurchaseImporter(ILogger<PurchaseImporter> _logger, SampleAppContex
     private async Task<Purchase> AddOrUpdatePurchase(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
         var dbPurchase = await dbContext.Purchases
-            //.AsNoTracking()
             .SingleOrDefaultAsync(p => p.TicksterPurchaseRefNo == crmPurchase.PurchaseRefno);
 
         Purchase mappedPurchase;

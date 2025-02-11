@@ -75,7 +75,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseCampaignLookup",
+                name: "PurchaseCampaign",
                 columns: table => new
                 {
                     PurchaseId = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -83,7 +83,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchaseCampaignLookup", x => new { x.PurchaseId, x.CampaignId });
+                    table.PrimaryKey("PK_PurchaseCampaign", x => new { x.PurchaseId, x.CampaignId });
                 });
 
             migrationBuilder.CreateTable(
@@ -256,7 +256,7 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                 name: "ImportLogs");
 
             migrationBuilder.DropTable(
-                name: "PurchaseCampaignLookup");
+                name: "PurchaseCampaign");
 
             migrationBuilder.DropTable(
                 name: "Restaurants");
