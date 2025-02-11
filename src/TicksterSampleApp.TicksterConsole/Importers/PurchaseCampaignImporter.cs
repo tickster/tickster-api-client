@@ -7,15 +7,10 @@ public class PurchaseCampaignImporter(SampleAppContext dbContext)
 {
     public async Task CreatePurchaseCampaignLink(Purchase dbPurchase, Campaign mappedCampaign)
     {
-        var campaignKey = BuildCampaignKey(mappedCampaign);
-
-        var mappedPurchaseCampaign = Mapper.MapPurchaseCampaign(dbPurchase, campaignKey);
+        var mappedPurchaseCampaign = Mapper.MapPurchaseCampaign(dbPurchase, mappedCampaign.Id);
 
         await dbContext.AddAsync(mappedPurchaseCampaign);
     }
-
-    private string BuildCampaignKey(Campaign mappedCampaign)
-        => mappedCampaign.TicksterCampaignId + mappedCampaign.TicksterCommunicationId;
 
     public void RemovePurchaseCampaignLinks(Purchase dbPurchase)
     {

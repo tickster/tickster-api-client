@@ -6,4 +6,5 @@ public class Campaign
     public string TicksterCommunicationId { get; set; } = string.Empty;
     public string ActivationCode { get; set; } = string.Empty;
     public string TicksterInternalReference { get; set; } = string.Empty;
+    public string Id => TicksterCampaignId + TicksterCommunicationId;
 }
