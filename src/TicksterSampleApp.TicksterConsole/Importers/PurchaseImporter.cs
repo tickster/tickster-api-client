@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TicksterSampleApp.Domain.Models;
 using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter CustomerImporter, EventImporter EventImporter, GoodsImporter GoodsImporter, CampaignImporter CampaignImporter)
+public class PurchaseImporter(ILogger<PurchaseImporter> _logger, SampleAppContext dbContext, CustomerImporter CustomerImporter, EventImporter EventImporter, GoodsImporter GoodsImporter, CampaignImporter CampaignImporter)
 {
     public async Task Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
@@ -29,11 +30,13 @@ public class PurchaseImporter(SampleAppContext dbContext, CustomerImporter Custo
         Purchase mappedPurchase;
         if (dbPurchase == null)
         {
+            _logger.LogDebug("New PurchaseRefNo ({PurchaseRefNo}) - adding to DB", crmPurchase.PurchaseRefno);
             mappedPurchase = Mapper.MapPurchase(crmPurchase);
             await dbContext.AddAsync(mappedPurchase);
         }
         else
         {
+            _logger.LogDebug("PurchaseRefNo ({PurchaseRefNo}) exists in DB - updating Purchase", dbPurchase.TicksterPurchaseRefNo);
             mappedPurchase = Mapper.MapPurchase(crmPurchase, dbPurchase);
             await dbContext.SaveChangesAsync();
         }

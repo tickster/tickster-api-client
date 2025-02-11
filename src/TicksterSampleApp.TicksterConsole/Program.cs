@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using TicksterSampleApp.Importer;
 using TicksterSampleApp.Importer.Importers;
 using TicksterSampleApp.Infrastructure.Configuration;
@@ -11,7 +12,9 @@ builder.Configuration.AddUserSecrets<Program>();
 
 builder.Services
     .AddInfrastructureServices(builder.Configuration)
-    .AddImporterServices();
+    .AddImporterServices()
+    .AddSerilog((services, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(builder.Configuration));
 
 using IHost host = builder.Build();
 
