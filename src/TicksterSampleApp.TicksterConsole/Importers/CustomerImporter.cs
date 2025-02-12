@@ -9,6 +9,11 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
 {
     public async Task<ImportResult> Import(Tickster.Api.Models.Crm.Purchase crmPurchase, Purchase mappedPurchase)
     {
+        if (!IsValidCustomer(crmPurchase))
+        {
+            return new ImportResult();
+        }
+
         var result = new ImportResult();
 
         var mappedCustomer = await AddOrUpdateCustomer(crmPurchase, result);
@@ -22,7 +27,7 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
     private async Task<Customer> AddOrUpdateCustomer(Tickster.Api.Models.Crm.Purchase crmPurchase, ImportResult result)
     {
         var dbCustomer = await dbContext.Customers
-            .SingleOrDefaultAsync(c => c.TicksterUserRefNo == crmPurchase.UserRefNo);
+            .SingleOrDefaultAsync(c => (c.TicksterUserRefNo == crmPurchase.UserRefNo && !string.IsNullOrEmpty(crmPurchase.UserRefNo)) || c.Email == crmPurchase.Email);
 
         Customer mappedCustomer;
         if (dbCustomer == null)
@@ -41,4 +46,7 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
 
         return mappedCustomer;
     }
+
+    private static bool IsValidCustomer(Tickster.Api.Models.Crm.Purchase crmPurchase)
+        => !string.IsNullOrEmpty(crmPurchase.UserRefNo) || !string.IsNullOrEmpty(crmPurchase.Email);
 }
