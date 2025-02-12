@@ -11,7 +11,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 namespace TicksterSampleApp.Infrastructure.Migrations
 {
     [DbContext(typeof(SampleAppContext))]
-    [Migration("20250211075924_initcreate")]
+    [Migration("20250211122622_initcreate")]
     partial class initcreate
     {
         /// <inheritdoc />
@@ -81,7 +81,6 @@ namespace TicksterSampleApp.Infrastructure.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("TicksterUserRefNo")
-                        .IsRequired()
                         .HasColumnType("varchar(10)");
 
                     b.Property<string>("ZipCode")
