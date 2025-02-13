@@ -24,7 +24,7 @@ You can run the "setup.py"-script to install dependencies and run the app.
 
 #### Create Sqlite database
 
-From the console project run the following to create a new migration
+From the console project, run the following to create a new migration
 
 `dotnet ef migrations add <your name for the migration> -p ..\TicksterSampleApp.Infrastructure\TicksterSampleApp.Infrastructure.csproj`
 
