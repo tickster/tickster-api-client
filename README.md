@@ -41,6 +41,6 @@ You can run the app by running `dotnet run` from within the console app folder
 
 ## Finally
 
-You can visualize the data with DB Browser for SQLite - https://sqlitebrowser.org/
-Open DB Browser and open the SQLite DB-file. The file is saved to "C:\Users\<username>\AppData\Local\sampleapp.db"
+1. You can visualize the data with DB Browser for SQLite - https://sqlitebrowser.org/
+1. Open DB Browser and open the SQLite DB-file. The file is saved to "C:\Users\<username>\AppData\Local\sampleapp.db"
 
