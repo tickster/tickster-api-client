@@ -5,7 +5,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContext dbContext)
+public class CustomerImporter(ILogger<CustomerImporter> logger, SampleAppContext dbContext)
 {
     public async Task<ImportResult> Import(Tickster.Api.Models.Crm.Purchase crmPurchase, Purchase mappedPurchase)
     {
@@ -19,8 +19,6 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
         var mappedCustomer = await AddOrUpdateCustomer(crmPurchase, result);
         mappedPurchase.CustomerId = mappedCustomer.Id;
 
-        await dbContext.SaveChangesAsync();
-
         return result;
     }
 
@@ -32,14 +30,14 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
         Customer mappedCustomer;
         if (dbCustomer == null)
         {
-            _logger.LogDebug("New Customer ({UserRefNo}) - adding to DB", crmPurchase.UserRefNo);
+            logger.LogDebug("New Customer ({UserRefNo}) - adding to DB", crmPurchase.UserRefNo);
             mappedCustomer = Mapper.MapCustomer(crmPurchase);
             await dbContext.AddAsync(mappedCustomer);
             result.Customers.Created.Add(mappedCustomer.Id);
         }
         else
         {
-            _logger.LogDebug("Customer ({UserRefNo}) exists in DB - updating Customer", dbCustomer.TicksterUserRefNo);
+            logger.LogDebug("Customer ({UserRefNo}) exists in DB - updating Customer", dbCustomer.TicksterUserRefNo);
             mappedCustomer = Mapper.MapCustomer(crmPurchase, dbCustomer);
             result.Customers.Updated.Add(mappedCustomer.Id);
         }

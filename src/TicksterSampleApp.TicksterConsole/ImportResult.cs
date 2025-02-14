@@ -28,12 +28,12 @@ public class ImportResult()
     {
         foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            var value = property.GetValue(this);
-            if (value == null) continue;
+            var instance = property.GetValue(this);
+            if (instance == null) continue;
 
-            if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(OperationResult<>))
+            if (instance.GetType().IsGenericType && instance.GetType().GetGenericTypeDefinition() == typeof(OperationResult<>))
             {
-                dynamic operationResult = value;
+                dynamic operationResult = instance;
                                 
                 var createdCount = operationResult.Created.Count;
                 var updatedCount = operationResult.Updated.Count;

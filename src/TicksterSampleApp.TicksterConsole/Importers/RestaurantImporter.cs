@@ -5,7 +5,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppContext dbContext, EventRestaurantImporter EventRestaurantImporter)
+public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppContext dbContext, EventRestaurantImporter eventRestaurantImporter)
 {
     public async Task<ImportResult> Import(List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants, Event mappedEvent)
     {
@@ -15,9 +15,7 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
         {
             var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant, result);
 
-            await EventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
-
-            await dbContext.SaveChangesAsync();
+            await eventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
         }
 
         return result;

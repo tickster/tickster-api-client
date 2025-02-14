@@ -17,8 +17,6 @@ public class GoodsImporter(SampleAppContext dbContext)
 
             mappedGoods.PurchaseId = mappedPurchase.Id;
             mappedGoods.EventId = await GetRelatedEventId(mappedGoods.TicksterEventId);
-
-            await dbContext.SaveChangesAsync();
         }
     }
 

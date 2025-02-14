@@ -27,7 +27,7 @@ public class TestRateLimit : MockHttpClientBase
         };
         SetupMockResponse();
 
-        await TicksterClient.GetCrmPurchasesAsync(1);
+        await TicksterClient.GetCrmPurchasesAtId(1);
 
         var rateLimit = TicksterClient.RateLimitInfo;
 
@@ -54,7 +54,7 @@ public class TestRateLimit : MockHttpClientBase
 
         SetupMockResponse();
 
-        await TicksterClient.GetCrmPurchasesAsync(1);
+        await TicksterClient.GetCrmPurchasesAtId(1);
 
         var updatedRateLimit = TicksterClient.RateLimitInfo;
 
@@ -79,7 +79,7 @@ public class TestRateLimit : MockHttpClientBase
 
         SetupMockResponse();
 
-        await TicksterClient.GetCrmPurchasesAsync(1);
+        await TicksterClient.GetCrmPurchasesAtId(1);
 
         var updatedRateLimit = TicksterClient.RateLimitInfo;
 
@@ -99,7 +99,7 @@ public class TestRateLimit : MockHttpClientBase
 
         SetupMockResponse();
 
-        var ex = await Assert.ThrowsAsync<RateLimitExceededError>(() => TicksterClient.GetCrmPurchasesAsync(1));
+        var ex = await Assert.ThrowsAsync<RateLimitExceededError>(() => TicksterClient.GetCrmPurchasesAtId(1));
         Assert.NotNull(ex.RateLimitInfo);
         Assert.Equal(100, ex.RateLimitInfo.ConfiguredLimit);
         Assert.Equal(0, ex.RateLimitInfo.RemainingRequests);
