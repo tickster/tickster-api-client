@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace TicksterSampleApp.Importer;
 
 public class ImportResult()
 {
-    public CreatedUpdatedResult<Guid> Purchases { get; set; } = new();
-    public CreatedUpdatedResult<Guid> Customers { get; set; } = new();
-    public CreatedUpdatedResult<Guid> Events { get; set; } = new();
-    public CreatedUpdatedResult<Guid> Restaurants { get; set; } = new();
-    public CreatedUpdatedResult<string> Campaigns { get; set; } = new();
-    public CreatedUpdatedResult<Guid> Venues { get; set; } = new();
+    public OperationResult<Guid> Purchases { get; set; } = new();
+    public OperationResult<Guid> Customers { get; set; } = new();
+    public OperationResult<Guid> Events { get; set; } = new();
+    public OperationResult<Guid> Restaurants { get; set; } = new();
+    public OperationResult<string> Campaigns { get; set; } = new();
+    public OperationResult<Guid> Venues { get; set; } = new();
 
     public ImportResult Merge(ImportResult other)
     {
@@ -25,11 +26,20 @@ public class ImportResult()
 
     public void LogResultSummary(ILogger _logger)
     {
-        Purchases.LogResultSummary(_logger, "Purchases");
-        Customers.LogResultSummary(_logger, "Customers");
-        Events.LogResultSummary(_logger, "Events");
-        Restaurants.LogResultSummary(_logger, "Restaurants");
-        Campaigns.LogResultSummary(_logger, "Campaigns");
-        Venues.LogResultSummary(_logger, "Venues");
+        foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            var value = property.GetValue(this);
+            if (value == null) continue;
+
+            if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(OperationResult<>))
+            {
+                dynamic operationResult = value;
+                                
+                var createdCount = operationResult.Created.Count;
+                var updatedCount = operationResult.Updated.Count;
+
+                _logger.LogInformation("{PropertyName} - Created: {CreatedCount}, Updated: {UpdatedCount}", property.Name, (int)createdCount, (int)updatedCount);
+            }
+        }
     }
 }

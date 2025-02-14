@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace TicksterSampleApp.Importer;
+﻿namespace TicksterSampleApp.Importer;
 
 public class OperationResult<T>
 {
@@ -13,11 +11,5 @@ public class OperationResult<T>
         Updated.UnionWith(other.Updated);
 
         return this;
-    }
-
-    public void LogResultSummary(ILogger _logger, string type)
-    {
-        _logger.LogInformation("{Type} - created {Count}", type, Created.Count);
-        _logger.LogInformation("{Type} - updated {Count}", type, Updated.Count);
     }
 }
