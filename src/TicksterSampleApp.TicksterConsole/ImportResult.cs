@@ -24,7 +24,7 @@ public class ImportResult()
         return this;
     }
 
-    public void LogResultSummary(ILogger _logger)
+    public void LogResultSummary(ILogger logger)
     {
         foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
@@ -38,7 +38,7 @@ public class ImportResult()
                 var createdCount = operationResult.Created.Count;
                 var updatedCount = operationResult.Updated.Count;
 
-                _logger.LogInformation("{PropertyName} - Created: {CreatedCount}, Updated: {UpdatedCount}", property.Name, (int)createdCount, (int)updatedCount);
+                logger.LogInformation("{PropertyName} - Created: {CreatedCount}, Updated: {UpdatedCount}", property.Name, (int)createdCount, (int)updatedCount);
             }
         }
     }
