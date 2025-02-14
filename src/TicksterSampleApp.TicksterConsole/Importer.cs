@@ -12,15 +12,18 @@ public class Importer(ILogger<Importer> _logger, TicksterClient client, ImportLo
         var crmPurchases = await client.GetCrmPurchasesAsync(crmId);
         _logger.LogInformation("Fetched {CrmPurchasesCount} purchases", crmPurchases.Count());
 
+        var result = new ImportResult();
+
         foreach (var crmPurchase in crmPurchases)
         {
             _logger.LogInformation("Importing Purchase with CrmId {crmId}", crmPurchase.CrmId);
-            await PurchaseImporter.Import(crmPurchase);
+            result.Merge(await PurchaseImporter.Import(crmPurchase));
 
             _logger.LogInformation("Writing last imported Purchase (CrmId: {crmId}) to ImportLog", crmPurchase.CrmId);
             await ImportLogHandler.WriteToImportLog(crmPurchase.CrmId);
         }
 
+        result.LogResultSummary(_logger);
         _logger.LogInformation("Import finished");
     }
 }

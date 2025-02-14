@@ -7,19 +7,23 @@ namespace TicksterSampleApp.Importer.Importers;
 
 public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppContext dbContext, EventRestaurantImporter EventRestaurantImporter)
 {
-    public async Task Import(List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants, Event mappedEvent)
+    public async Task<ImportResult> Import(List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants, Event mappedEvent)
     {
+        var result = new ImportResult();
+
         foreach (var crmRestaurant in crmRestaurants)
         {
-            var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant);
+            var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant, result);
 
             await EventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
 
             await dbContext.SaveChangesAsync();
         }
+
+        return result;
     }
 
-    private async Task<Restaurant> AddOrUpdateRestaurant(Tickster.Api.Models.Crm.Restaurant crmRestaurant)
+    private async Task<Restaurant> AddOrUpdateRestaurant(Tickster.Api.Models.Crm.Restaurant crmRestaurant, ImportResult result)
     {
         var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.RestaurantId == crmRestaurant.RestaurantId);
 
@@ -29,11 +33,13 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
             _logger.LogDebug("New Restaurant ({RestaurantId}) - adding to DB", crmRestaurant.RestaurantId);
             mappedRestaurant = Mapper.MapRestaurant(crmRestaurant);
             await dbContext.AddAsync(mappedRestaurant);
+            result.Restaurants.Created.Add(mappedRestaurant.Id);
         }
         else
         {
             _logger.LogDebug("Restaurant ({RestaurantId}) exists in DB - updating Restaurant", dbRestaurant.RestaurantId);
             mappedRestaurant = Mapper.MapRestaurant(crmRestaurant, dbRestaurant);
+            result.Restaurants.Updated.Add(mappedRestaurant.Id);
         }
 
         return mappedRestaurant;

@@ -7,15 +7,19 @@ namespace TicksterSampleApp.Importer.Importers;
 
 public class VenueImporter(ILogger<VenueImporter> _logger, SampleAppContext dbContext)
 {
-    public async Task Import(Tickster.Api.Models.Crm.Venue crmVenue, Event mappedEvent)
+    public async Task<ImportResult> Import(Tickster.Api.Models.Crm.Venue crmVenue, Event mappedEvent)
     {
-        var mappedVenue = await AddOrUpdateVenue(crmVenue);
+        var result = new ImportResult();
+
+        var mappedVenue = await AddOrUpdateVenue(crmVenue, result);
         mappedEvent.VenueId = mappedVenue.Id;
 
         await dbContext.SaveChangesAsync();
+
+        return result;
     }
 
-    private async Task<Venue> AddOrUpdateVenue(Tickster.Api.Models.Crm.Venue crmVenue)
+    private async Task<Venue> AddOrUpdateVenue(Tickster.Api.Models.Crm.Venue crmVenue, ImportResult result)
     {
         var dbVenue = await dbContext.Venues.SingleOrDefaultAsync(v => v.TicksterVenueId == crmVenue.Id);
 
@@ -25,11 +29,13 @@ public class VenueImporter(ILogger<VenueImporter> _logger, SampleAppContext dbCo
             _logger.LogDebug("New Venue ({VenueId}) - adding to DB", crmVenue.Id);
             mappedVenue = Mapper.MapVenue(crmVenue);
             await dbContext.AddAsync(mappedVenue);
+            result.Venues.Created.Add(mappedVenue.Id);
         }
         else
         {
             _logger.LogDebug("Venue ({VenueId}) exists in DB - updating Venue", dbVenue.TicksterVenueId);
             mappedVenue = Mapper.MapVenue(crmVenue, dbVenue);
+            result.Venues.Updated.Add(mappedVenue.Id);
         }
 
         return mappedVenue;
