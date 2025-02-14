@@ -18,8 +18,6 @@ public class EventImporter(ILogger<EventImporter> _logger, SampleAppContext dbCo
             result.Merge(await RestaurantImporter.Import(crmEvent.Restaurants, mappedEvent));
 
             result.Merge(await VenueImporter.Import(crmEvent.Venue, mappedEvent));
-
-            await dbContext.SaveChangesAsync();
         }
 
         return result;

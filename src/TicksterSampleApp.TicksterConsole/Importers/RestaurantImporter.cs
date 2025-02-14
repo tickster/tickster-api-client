@@ -13,11 +13,14 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
 
         foreach (var crmRestaurant in crmRestaurants)
         {
+            if (IsRestaurantTracked(crmRestaurant))
+            {
+                continue;
+            }
+
             var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant, result);
 
             await EventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
-
-            await dbContext.SaveChangesAsync();
         }
 
         return result;
@@ -44,4 +47,9 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
 
         return mappedRestaurant;
     }
+
+    private bool IsRestaurantTracked(Tickster.Api.Models.Crm.Restaurant crmRestaurant)
+        => dbContext.ChangeTracker
+            .Entries<Restaurant>()
+            .Any(e => e.Entity.RestaurantId == crmRestaurant.RestaurantId && e.State == EntityState.Added);
 }

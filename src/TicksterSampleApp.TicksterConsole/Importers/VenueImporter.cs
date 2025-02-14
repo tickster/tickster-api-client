@@ -14,8 +14,6 @@ public class VenueImporter(ILogger<VenueImporter> _logger, SampleAppContext dbCo
         var mappedVenue = await AddOrUpdateVenue(crmVenue, result);
         mappedEvent.VenueId = mappedVenue.Id;
 
-        await dbContext.SaveChangesAsync();
-
         return result;
     }
 

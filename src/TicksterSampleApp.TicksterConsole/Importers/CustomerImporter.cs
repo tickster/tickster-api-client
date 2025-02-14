@@ -19,8 +19,6 @@ public class CustomerImporter(ILogger<CustomerImporter> _logger, SampleAppContex
         var mappedCustomer = await AddOrUpdateCustomer(crmPurchase, result);
         mappedPurchase.CustomerId = mappedCustomer.Id;
 
-        await dbContext.SaveChangesAsync();
-
         return result;
     }
 

@@ -31,6 +31,6 @@ public class ImportLogHandler(IOptions<TicksterCrmConfig> options, SampleAppCont
     {
         var dbImportLog = await dbContext.ImportLogs.SingleOrDefaultAsync(il => il.ApiKey == ApiKey);
 
-        return dbImportLog?.LastTicksterCrmId ?? 0;
+        return dbImportLog?.LastTicksterCrmId ?? -1;
     }
 }

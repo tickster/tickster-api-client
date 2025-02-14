@@ -11,7 +11,7 @@ public class TestCrmResponseData : MockAgentBase
 
         // Act
 
-        var result = await TicksterClient.GetCrmPurchasesAsync(1);
+        var result = await TicksterClient.GetCrmPurchasesAtId(1);
 
         // Assert
 
@@ -138,7 +138,7 @@ public class TestCrmResponseData : MockAgentBase
     public async Task GetCrmPurchasesAsync_EventRestaurantIdFormats(string testFile, int? expectedId)
     {
         SetupMockResponse(testFile);
-        var result = await TicksterClient.GetCrmPurchasesAsync(1);
+        var result = await TicksterClient.GetCrmPurchasesAtId(1);
         var item = result.FirstOrDefault()?.Goods?.FirstOrDefault();
 
         Assert.NotNull(item);
@@ -152,7 +152,7 @@ public class TestCrmResponseData : MockAgentBase
         SetupMockResponse("crm-purchases-empty.json");
 
         // Act
-        var result = await TicksterClient.GetCrmPurchasesAsync(1);
+        var result = await TicksterClient.GetCrmPurchasesAtId(1);
 
         // Assert
         Assert.NotNull(result);

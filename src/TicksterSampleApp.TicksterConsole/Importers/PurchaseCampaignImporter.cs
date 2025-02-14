@@ -8,8 +8,6 @@ public class PurchaseCampaignImporter(SampleAppContext dbContext)
     public async Task CreatePurchaseCampaignLink(Purchase dbPurchase, Campaign mappedCampaign)
     {
         var mappedPurchaseCampaign = Mapper.MapPurchaseCampaign(dbPurchase, mappedCampaign.Id);
-
-        await dbContext.AddAsync(mappedPurchaseCampaign);
     }
 
     public void RemovePurchaseCampaignLinks(Purchase dbPurchase)

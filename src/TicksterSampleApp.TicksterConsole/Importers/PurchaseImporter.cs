@@ -42,7 +42,6 @@ public class PurchaseImporter(ILogger<PurchaseImporter> _logger, SampleAppContex
         {
             _logger.LogDebug("PurchaseRefNo ({PurchaseRefNo}) exists in DB - updating Purchase", dbPurchase.TicksterPurchaseRefNo);
             mappedPurchase = Mapper.MapPurchase(crmPurchase, dbPurchase);
-            await dbContext.SaveChangesAsync();
             result.Purchases.Updated.Add(mappedPurchase.Id);
         }
 
