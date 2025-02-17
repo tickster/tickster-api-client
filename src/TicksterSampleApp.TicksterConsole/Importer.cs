@@ -1,23 +1,42 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Tickster.Api;
 using TicksterSampleApp.Importer.Importers;
 
 namespace TicksterSampleApp.Importer;
 
-public class Importer(ILogger<Importer> _logger, TicksterClient client, ImportLogHandler ImportLogHandler, PurchaseImporter PurchaseImporter)
+public class Importer(IConfiguration configuration, ILogger<Importer> _logger, TicksterClient client, ImportLogHandler ImportLogHandler, PurchaseImporter PurchaseImporter)
 {
+    private readonly int maxDepth = configuration.GetValue<int>("MaxDepth");
     private readonly ImportResult result = new();
 
-    public async Task Import(int crmId)
+    public async Task RunImport()
     {
-        _logger.LogInformation("Fetching CrmPurchases starting from CrmId: {crmId}", crmId);
+        await Import(await ImportLogHandler.GetLastCrmId());
+    }
+
+    public async Task Import(int crmId, int? depthCounter = 0)
+    {
+        if (depthCounter == maxDepth)
+        {
+            result.LogResultSummary(_logger);
+            _logger.LogInformation("Max depth ({MaxDepth}) reached. Exiting...", maxDepth);
+            return;
+        }
+
         var crmPurchases = await client.GetCrmPurchasesAfterId(crmId);
         _logger.LogInformation("Fetched {CrmPurchasesCount} purchases", crmPurchases.Count());
 
         if (crmPurchases.Any())
         {
-            await ImportPurchases(crmPurchases);
-            await Import(await ImportLogHandler.GetLastCrmId());
+            foreach (var crmPurchase in crmPurchases)
+            {
+                _logger.LogInformation("Importing Purchase with CrmId {crmId}", crmPurchase.CrmId);
+                result.Merge(await PurchaseImporter.Import(crmPurchase));
+                await ImportLogHandler.WriteToImportLog(crmPurchase.CrmId);
+            }
+
+            await Import(crmPurchases.Last().CrmId, ++depthCounter);
             return;
         }
 
@@ -25,15 +44,4 @@ public class Importer(ILogger<Importer> _logger, TicksterClient client, ImportLo
         result.LogResultSummary(_logger);
         _logger.LogInformation("Import finished");
     }
-
-    public async Task ImportPurchases(IEnumerable<Tickster.Api.Models.Crm.Purchase> crmPurchases)
-    {
-        foreach (var crmPurchase in crmPurchases)
-        {
-            _logger.LogInformation("Importing Purchase with CrmId {crmId}", crmPurchase.CrmId);
-            result.Merge(await PurchaseImporter.Import(crmPurchase));
-
-            await ImportLogHandler.WriteToImportLog(crmPurchase.CrmId);
-        }
-    } 
 }
