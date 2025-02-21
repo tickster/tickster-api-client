@@ -5,22 +5,20 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class PurchaseImporter(ILogger<PurchaseImporter> _logger, SampleAppContext dbContext, CustomerImporter CustomerImporter, EventImporter EventImporter, GoodsImporter GoodsImporter, CampaignImporter CampaignImporter)
+public class PurchaseImporter(ILogger<PurchaseImporter> logger, SampleAppContext dbContext, CustomerImporter customerImporter, EventImporter eventImporter, GoodsImporter goodsImporter, CampaignImporter campaignImporter)
 {
     public async Task<ImportResult> Import(Tickster.Api.Models.Crm.Purchase crmPurchase)
     {
         var result = new ImportResult();
         var mappedPurchase = await AddOrUpdatePurchase(crmPurchase, result);
 
-        result.Merge(await CustomerImporter.Import(crmPurchase, mappedPurchase));
+        result.Merge(await customerImporter.Import(crmPurchase, mappedPurchase));
 
-        result.Merge(await EventImporter.Import(crmPurchase.Events));
+        result.Merge(await eventImporter.Import(crmPurchase.Events));
 
-        await GoodsImporter.Import(crmPurchase.Goods, mappedPurchase);
+        await goodsImporter.Import(crmPurchase.Goods, mappedPurchase);
 
-        result.Merge(await CampaignImporter.Import(crmPurchase.Campaigns, mappedPurchase));
-
-        await dbContext.SaveChangesAsync();
+        result.Merge(await campaignImporter.Import(crmPurchase.Campaigns, mappedPurchase));
 
         return result;
     }
@@ -33,16 +31,15 @@ public class PurchaseImporter(ILogger<PurchaseImporter> _logger, SampleAppContex
         Purchase mappedPurchase;
         if (dbPurchase == null)
         {
-            _logger.LogDebug("New PurchaseRefNo ({PurchaseRefNo}) - adding to DB", crmPurchase.PurchaseRefno);
+            logger.LogDebug("New PurchaseRefNo ({PurchaseRefNo}) - adding to DB", crmPurchase.PurchaseRefno);
             mappedPurchase = Mapper.MapPurchase(crmPurchase);
             await dbContext.AddAsync(mappedPurchase);
             result.Purchases.Created.Add(mappedPurchase.Id);
         }
         else
         {
-            _logger.LogDebug("PurchaseRefNo ({PurchaseRefNo}) exists in DB - updating Purchase", dbPurchase.TicksterPurchaseRefNo);
+            logger.LogDebug("PurchaseRefNo ({PurchaseRefNo}) exists in DB - updating Purchase", dbPurchase.TicksterPurchaseRefNo);
             mappedPurchase = Mapper.MapPurchase(crmPurchase, dbPurchase);
-            await dbContext.SaveChangesAsync();
             result.Purchases.Updated.Add(mappedPurchase.Id);
         }
 

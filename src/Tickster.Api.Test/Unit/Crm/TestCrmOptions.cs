@@ -13,7 +13,7 @@ public class TestCrmOptions : MockAgentBase
         SetupMockResponse("crm-purchases-ok.json");
 
         // Act
-        await TicksterClient.GetCrmPurchasesAsync(purchaseId);
+        await TicksterClient.GetCrmPurchasesAtId(purchaseId);
 
         // Assert
         MockAgent.Verify(agent => agent.MakeCrmRequest(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), true), Times.Once);
@@ -29,7 +29,7 @@ public class TestCrmOptions : MockAgentBase
         SetupMockResponse("crm-purchases-ok.json");
 
         // Act
-        await TicksterClient.GetCrmPurchasesAsync(purchaseId, options: options);
+        await TicksterClient.GetCrmPurchasesAtId(purchaseId, options: options);
 
         // Assert
         MockAgent.Verify(agent => agent.MakeCrmRequest(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), false), Times.Once);
@@ -42,7 +42,7 @@ public class TestCrmOptions : MockAgentBase
         var purchaseId = 123;
         SetupMockResponse("crm-purchases-unsynced-refund.json");
         // Act
-        var result = await TicksterClient.GetCrmPurchasesAsync(purchaseId);
+        var result = await TicksterClient.GetCrmPurchasesAtId(purchaseId);
         // Assert
         Assert.Single(result);
     }
@@ -55,7 +55,7 @@ public class TestCrmOptions : MockAgentBase
         var options = new GetCrmPurchasesOptions { SuppressUnsyncedRefunds = false };
         SetupMockResponse("crm-purchases-unsynced-refund.json");
         // Act
-        var result = await TicksterClient.GetCrmPurchasesAsync(purchaseId, options: options);
+        var result = await TicksterClient.GetCrmPurchasesAtId(purchaseId, options: options);
         // Assert
         Assert.Equal(2, result.Count());
     }

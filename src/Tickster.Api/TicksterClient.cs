@@ -19,7 +19,7 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
     public ITicksterHttpAgent Agent => agent;
     public RateLimitInfo RateLimitInfo => Agent.RateLimitInfo;
 
-    public async Task<IEnumerable<Purchase>> GetCrmPurchasesAsync(
+    public async Task<IEnumerable<Purchase>> GetCrmPurchasesAtId(
         int purchaseId,
         int? limit = null,
         string? lang = null,
@@ -42,6 +42,13 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
 
         return purchaseResponse.Purchases.Select(p => p.Purchase);
     }
+
+    public async Task<IEnumerable<Purchase>> GetCrmPurchasesAfterId(
+        int purchaseId,
+        int? limit = null,
+        string? lang = null,
+        GetCrmPurchasesOptions? options = null)
+        => await GetCrmPurchasesAtId(purchaseId + 1, limit, lang, options);
 
     private T ParseJsonResponse<T>(string json)
         => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions)!;
