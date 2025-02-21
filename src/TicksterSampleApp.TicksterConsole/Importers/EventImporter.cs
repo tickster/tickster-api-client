@@ -16,7 +16,6 @@ public class EventImporter(ILogger<EventImporter> logger, SampleAppContext dbCon
             var mappedEvent = await AddOrUpdateEvent(crmEvent, result);
 
             result.Merge(await restaurantImporter.Import(crmEvent.Restaurants, mappedEvent));
-
             result.Merge(await venueImporter.Import(crmEvent.Venue, mappedEvent));
         }
 

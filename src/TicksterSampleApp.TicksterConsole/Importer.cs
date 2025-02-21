@@ -1,37 +1,46 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Tickster.Api;
 using TicksterSampleApp.Importer.Importers;
-using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer;
 
-public class Importer(ILogger<Importer> logger, SampleAppContext dbContext, TicksterClient client, ImportLogHandler importLogHandler, PurchaseImporter purchaseImporter)
-{    
-    public async Task Import(int crmId)
-    {
-        logger.LogInformation("Fetching CrmPurchases starting from CrmId: {crmId}", crmId + 1);
-        var crmPurchases = await client.GetCrmPurchasesAfterId(crmId);
-        logger.LogInformation("Fetched {CrmPurchasesCount} purchases", crmPurchases.Count());
+public class Importer(IConfiguration configuration, ILogger<Importer> logger, TicksterClient client, ImportLogHandler importLogHandler, PurchaseImporter purchaseImporter)
+{
+    private readonly int maxDepth = configuration.GetValue<int>("MaxDepth");
+    private readonly ImportResult result = new();
 
-        if (!crmPurchases.Any())
+    public async Task RunImport()
+    {
+        await Import(await importLogHandler.GetLastCrmId());
+    }
+
+    public async Task Import(int crmId, int? depthCounter = 0)
+    {
+        if (depthCounter == maxDepth)
         {
-            logger.LogInformation("There are no purchases to import");
+            result.LogResultSummary(logger);
+            logger.LogInformation("Max depth ({MaxDepth}) reached. Exiting...", maxDepth);
             return;
         }
 
-        var result = new ImportResult();
+        var crmPurchases = await client.GetCrmPurchasesAfterId(crmId);
+        logger.LogInformation("Fetched {CrmPurchasesCount} purchases", crmPurchases.Count());
 
-        foreach (var crmPurchase in crmPurchases)
+        if (crmPurchases.Any())
         {
-            logger.LogInformation("Importing Purchase with CrmId {crmId}", crmPurchase.CrmId);
-            result.Merge(await purchaseImporter.Import(crmPurchase));
+            foreach (var crmPurchase in crmPurchases)
+            {
+                logger.LogInformation("Importing Purchase with CrmId {crmId}", crmPurchase.CrmId);
+                result.Merge(await purchaseImporter.Import(crmPurchase));
+                await importLogHandler.WriteToImportLog(crmPurchase.CrmId);
+            }
 
-            logger.LogInformation("Writing last imported Purchase (CrmId: {crmId}) to ImportLog", crmPurchase.CrmId);
-            await importLogHandler.WriteToImportLog(crmPurchase.CrmId);
-
-            await dbContext.SaveChangesAsync();
+            await Import(crmPurchases.Last().CrmId, ++depthCounter);
+            return;
         }
 
+        logger.LogInformation("No new purchases to import");
         result.LogResultSummary(logger);
         logger.LogInformation("Import finished");
     }

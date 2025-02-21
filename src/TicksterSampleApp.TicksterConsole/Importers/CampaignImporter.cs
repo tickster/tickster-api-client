@@ -15,7 +15,6 @@ public class CampaignImporter(ILogger<CampaignImporter> logger, SampleAppContext
         foreach (var crmCampaign in crmCampaigns)
         {
             var mappedCampaign = await AddOrUpdateCampaign(crmCampaign, result);
-
             await purchaseCampaignImporter.CreatePurchaseCampaignLink(mappedPurchase, mappedCampaign);
         }
 
