@@ -6,7 +6,7 @@ using TicksterSampleApp.Importer;
 using TicksterSampleApp.Importer.Importers;
 using TicksterSampleApp.Infrastructure.Configuration;
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+var builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddUserSecrets<Program>();
 

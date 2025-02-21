@@ -23,8 +23,6 @@ public class ImportLogHandler(IOptions<TicksterCrmConfig> options, SampleAppCont
             dbContext.Remove(dbImportLog);
             await dbContext.ImportLogs.AddAsync(new ImportLog { ApiKey = ApiKey, Date = DateTime.Now, LastTicksterCrmId = crmId });
         }
-
-        await dbContext.SaveChangesAsync();
     }
 
     public async Task<int> GetLastCrmId()

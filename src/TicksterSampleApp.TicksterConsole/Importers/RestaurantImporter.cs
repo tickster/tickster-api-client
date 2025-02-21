@@ -5,7 +5,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppContext dbContext, EventRestaurantImporter EventRestaurantImporter)
+public class RestaurantImporter(ILogger<RestaurantImporter> logger, SampleAppContext dbContext, EventRestaurantImporter eventRestaurantImporter)
 {
     public async Task<ImportResult> Import(List<Tickster.Api.Models.Crm.Restaurant> crmRestaurants, Event mappedEvent)
     {
@@ -20,7 +20,7 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
 
             var mappedRestaurant = await AddOrUpdateRestaurant(crmRestaurant, result);
 
-            await EventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
+            await eventRestaurantImporter.CreateEventRestaurantLink(mappedEvent, mappedRestaurant);
         }
 
         return result;
@@ -33,14 +33,14 @@ public class RestaurantImporter(ILogger<RestaurantImporter> _logger, SampleAppCo
         Restaurant mappedRestaurant;
         if (dbRestaurant == null)
         {
-            _logger.LogDebug("New Restaurant ({RestaurantId}) - adding to DB", crmRestaurant.RestaurantId);
+            logger.LogDebug("New Restaurant ({RestaurantId}) - adding to DB", crmRestaurant.RestaurantId);
             mappedRestaurant = Mapper.MapRestaurant(crmRestaurant);
             await dbContext.AddAsync(mappedRestaurant);
             result.Restaurants.Created.Add(mappedRestaurant.Id);
         }
         else
         {
-            _logger.LogDebug("Restaurant ({RestaurantId}) exists in DB - updating Restaurant", dbRestaurant.RestaurantId);
+            logger.LogDebug("Restaurant ({RestaurantId}) exists in DB - updating Restaurant", dbRestaurant.RestaurantId);
             mappedRestaurant = Mapper.MapRestaurant(crmRestaurant, dbRestaurant);
             result.Restaurants.Updated.Add(mappedRestaurant.Id);
         }

@@ -5,7 +5,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class VenueImporter(ILogger<VenueImporter> _logger, SampleAppContext dbContext)
+public class VenueImporter(ILogger<VenueImporter> logger, SampleAppContext dbContext)
 {
     public async Task<ImportResult> Import(Tickster.Api.Models.Crm.Venue crmVenue, Event mappedEvent)
     {
@@ -24,14 +24,14 @@ public class VenueImporter(ILogger<VenueImporter> _logger, SampleAppContext dbCo
         Venue mappedVenue;
         if (dbVenue == null)
         {
-            _logger.LogDebug("New Venue ({VenueId}) - adding to DB", crmVenue.Id);
+            logger.LogDebug("New Venue ({VenueId}) - adding to DB", crmVenue.Id);
             mappedVenue = Mapper.MapVenue(crmVenue);
             await dbContext.AddAsync(mappedVenue);
             result.Venues.Created.Add(mappedVenue.Id);
         }
         else
         {
-            _logger.LogDebug("Venue ({VenueId}) exists in DB - updating Venue", dbVenue.TicksterVenueId);
+            logger.LogDebug("Venue ({VenueId}) exists in DB - updating Venue", dbVenue.TicksterVenueId);
             mappedVenue = Mapper.MapVenue(crmVenue, dbVenue);
             result.Venues.Updated.Add(mappedVenue.Id);
         }

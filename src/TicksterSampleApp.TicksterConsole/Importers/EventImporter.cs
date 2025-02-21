@@ -5,7 +5,7 @@ using TicksterSampleApp.Infrastructure.Contexts;
 
 namespace TicksterSampleApp.Importer.Importers;
 
-public class EventImporter(ILogger<EventImporter> _logger, SampleAppContext dbContext, RestaurantImporter RestaurantImporter, VenueImporter VenueImporter)
+public class EventImporter(ILogger<EventImporter> logger, SampleAppContext dbContext, RestaurantImporter restaurantImporter, VenueImporter venueImporter)
 {
     public async Task<ImportResult> Import(List<Tickster.Api.Models.Crm.Event> crmEvents)
     {
@@ -15,9 +15,8 @@ public class EventImporter(ILogger<EventImporter> _logger, SampleAppContext dbCo
         {
             var mappedEvent = await AddOrUpdateEvent(crmEvent, result);
 
-            result.Merge(await RestaurantImporter.Import(crmEvent.Restaurants, mappedEvent));
-
-            result.Merge(await VenueImporter.Import(crmEvent.Venue, mappedEvent));
+            result.Merge(await restaurantImporter.Import(crmEvent.Restaurants, mappedEvent));
+            result.Merge(await venueImporter.Import(crmEvent.Venue, mappedEvent));
         }
 
         return result;
@@ -30,14 +29,14 @@ public class EventImporter(ILogger<EventImporter> _logger, SampleAppContext dbCo
         Event mappedEvent;
         if (dbEvent == null)
         {
-            _logger.LogDebug("New Event ({EventId}) - adding to DB", crmEvent.Id);
+            logger.LogDebug("New Event ({EventId}) - adding to DB", crmEvent.Id);
             mappedEvent = Mapper.MapEvent(crmEvent);
             await dbContext.AddAsync(mappedEvent);
             result.Events.Created.Add(mappedEvent.Id);
         }
         else
         {
-            _logger.LogDebug("Event ({EventId}) exists in DB - updating Event", dbEvent.TicksterEventId);
+            logger.LogDebug("Event ({EventId}) exists in DB - updating Event", dbEvent.TicksterEventId);
             mappedEvent = Mapper.MapEvent(crmEvent, dbEvent);
             result.Events.Updated.Add(mappedEvent.Id);
         }

@@ -24,21 +24,21 @@ public class ImportResult()
         return this;
     }
 
-    public void LogResultSummary(ILogger _logger)
+    public void LogResultSummary(ILogger logger)
     {
         foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            var value = property.GetValue(this);
-            if (value == null) continue;
+            var instance = property.GetValue(this);
+            if (instance == null) continue;
 
-            if (value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition() == typeof(OperationResult<>))
+            if (instance.GetType().IsGenericType && instance.GetType().GetGenericTypeDefinition() == typeof(OperationResult<>))
             {
-                dynamic operationResult = value;
+                dynamic operationResult = instance;
                                 
                 var createdCount = operationResult.Created.Count;
                 var updatedCount = operationResult.Updated.Count;
 
-                _logger.LogInformation("{PropertyName} - Created: {CreatedCount}, Updated: {UpdatedCount}", property.Name, (int)createdCount, (int)updatedCount);
+                logger.LogInformation("{PropertyName} - Created: {CreatedCount}, Updated: {UpdatedCount}", property.Name, (int)createdCount, (int)updatedCount);
             }
         }
     }
