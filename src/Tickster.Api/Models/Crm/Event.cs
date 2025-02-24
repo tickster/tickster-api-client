@@ -1,4 +1,5 @@
 ﻿namespace Tickster.Api.Models.Crm;
+
 public class Event
 {
     public string Id { get; set; } = string.Empty;

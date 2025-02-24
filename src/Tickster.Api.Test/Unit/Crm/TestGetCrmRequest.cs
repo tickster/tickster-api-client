@@ -10,7 +10,7 @@ public class TestGetCrmRequest : MockAgentBase
     public async Task GetCrmPurchasesAfterId_ShouldRequestNextCrmId(int crmId, int expectedId)
     {
         // Arrange
-        SetupMockResponse("crm-purchases-empty.json");
+        SetupCrmMockResponse("crm-purchases-empty.json");
 
         // Act
         await TicksterClient.GetCrmPurchasesAfterId(crmId);

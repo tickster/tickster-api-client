@@ -9,7 +9,7 @@ public class TestSetup
     {
         var options = new TicksterOptions
         {
-            Endpoint = "https://api.tickster.com",
+            CrmBaseUrl = "https://api.tickster.com",
             ApiKey = "test-api-key"
         };
         var factory = new TicksterClientFactory(Options.Create(options));

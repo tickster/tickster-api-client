@@ -2,7 +2,7 @@
 
 public class TicksterOptions
 {
-    public string Endpoint { get; set; } = "https://api.tickster.com";
+    public string CrmBaseUrl { get; set; } = "https://api.tickster.com";
     public string EventBaseUrl { get; set; } = "https://event.api.tickster.com";
     public string ApiKey { get; set; } = string.Empty;
     public string Login { get; set; } = string.Empty;

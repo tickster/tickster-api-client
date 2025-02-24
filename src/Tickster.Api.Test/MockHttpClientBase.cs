@@ -24,7 +24,7 @@ public abstract class MockHttpClientBase
         var options = Options.Create(new TicksterOptions
         {
             ApiKey = "the-api-key",
-            Endpoint = "https://api.example.com",
+            CrmBaseUrl = "https://api.example.com",
             DefaultLanguage = "sv",
             DefaultResultLimit = 500,
             EogRequestCode = "the-eog-code",
@@ -36,7 +36,7 @@ public abstract class MockHttpClientBase
 
         var httpClient = new HttpClient(MockHandler.Object)
         {
-            BaseAddress = new Uri(TicksterOptions.Endpoint),
+            BaseAddress = new Uri(TicksterOptions.CrmBaseUrl),
             DefaultRequestHeaders =
             {
                 { "x-api-key", TicksterOptions.ApiKey }
