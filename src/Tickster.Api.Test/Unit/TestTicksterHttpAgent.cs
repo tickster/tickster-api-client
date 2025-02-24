@@ -1,4 +1,5 @@
-﻿using Tickster.Api.Dtos;
+﻿using System.Web;
+using Tickster.Api.Dtos;
 
 namespace Tickster.Api.Test.Unit;
 public class TestTicksterHttpAgent : MockHttpClientBase
@@ -120,9 +121,12 @@ public class TestTicksterHttpAgent : MockHttpClientBase
             // Assert
             Assert.Equal(HttpMethod.Get, request.Method);
             Assert.Equal(host, request.RequestUri!.Host);
-            Assert.Equal(1, request.RequestUri!.Query.Split($"take={take}").Length - 1);
-            Assert.Equal(1, request.RequestUri!.Query.Split($"skip={skip}").Length - 1);
+
             Assert.Equal($"/api/v{version}/{lang}/{endpoint}", request.RequestUri!.AbsolutePath);
+
+            var parsedQuery = HttpUtility.ParseQueryString(request.RequestUri!.Query);
+            Assert.Equal(take, int.Parse(parsedQuery["take"]!));
+            Assert.Equal(skip, int.Parse(parsedQuery["skip"]!));
         };
 
         SetupMockResponse();
