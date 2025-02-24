@@ -104,10 +104,10 @@ public class TestTicksterHttpAgent : MockHttpClientBase
     }
 
     [Theory]
-    [InlineData("https://an.example.com", "first-endpoint", "1.0", "se", 10, 0)]
-    [InlineData("https://another.example.com", "second-endpoint", "2.0", "no", 20, 10)]
-    [InlineData("https://onemore.example.com", "third-endpoint", "3.0", "dk", 5, 7)]
-    public async Task MakeApiRequest_BuildsRequestUrl(string baseUrl, 
+    [InlineData("an.example.com", "first-endpoint", "1.0", "se", 10, 0)]
+    [InlineData("another.example.com", "second-endpoint", "2.0", "no", 20, 10)]
+    [InlineData("onemore.example.com", "third-endpoint", "3.0", "dk", 5, 7)]
+    public async Task MakeApiRequest_BuildsRequestUrl(string host, 
         string endpoint, 
         string version, 
         string lang, 
@@ -119,14 +119,15 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         {
             // Assert
             Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Equal($"{baseUrl}/api/v{version}/{lang}/{endpoint}?take={take}&skip={skip}", request.RequestUri?.ToString());
+            Assert.Equal(host, request.RequestUri!.Host);
+            Assert.Equal(1, request.RequestUri!.Query.Split($"take={take}").Length - 1);
+            Assert.Equal(1, request.RequestUri!.Query.Split($"skip={skip}").Length - 1);
+            Assert.Equal($"/api/v{version}/{lang}/{endpoint}", request.RequestUri!.AbsolutePath);
         };
 
         SetupMockResponse();
 
-        var pagination = new Pagination { Take = take, Skip = skip };
-
         // Act
-        await Agent.MakeApiRequest($"{baseUrl}", endpoint, version, lang, pagination);
+        await Agent.MakeApiRequest($"https://{host}", endpoint, version, lang, new () { Take = take, Skip = skip });
     }
 }
