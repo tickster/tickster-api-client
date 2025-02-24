@@ -23,7 +23,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
         var requestUrl = new UriBuilder(baseUrl)
         {
             Path = $"api/v{version}/{lang}/{endpoint}",
-            Query = pagination.ToString()
+            Query = BuildPaginationQueryString(pagination)
         };
 
         return await MakeRequest(requestUrl.ToString());
@@ -166,4 +166,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
             Title = response.Error,
             Status = (int?)e.StatusCode ?? 0
         };
+
+    private static string BuildPaginationQueryString(Pagination pagination)
+        => $"take={pagination.Take}&skip={pagination.Skip}";
 }
