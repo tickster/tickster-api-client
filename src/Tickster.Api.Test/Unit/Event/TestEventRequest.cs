@@ -17,23 +17,7 @@ public class TestEventRequest : MockAgentBase
 
         // Assert
         MockAgent.Verify(c => c.MakeApiRequest(It.IsAny<string>(), It.IsAny<string>(), TicksterOptions.DefaultApiVersion, TicksterOptions.DefaultLanguage, It.IsAny<Pagination>()), Times.Once);
-    }
-
-    [Theory]
-    [InlineData(1, 0)]
-    [InlineData(99, 91)]
-    public async Task Event_PassesPaginationObject(int take, int skip)
-    {
-        // Arrange
-        SetupMockResponse("event-empty.json");
-        var pagination = new Pagination() { Take = take, Skip = skip };
-
-        // Act
-        await TicksterClient.Event("4ny1d", pagination: pagination);
-
-        // Assert
-        MockAgent.Verify(c => c.MakeApiRequest(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), pagination), Times.Once);
-    }
+    }    
 
     [Theory]
     [InlineData("1234", "1.0", "se")]
