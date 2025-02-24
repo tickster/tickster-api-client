@@ -1,8 +1,4 @@
-﻿using Moq.Protected;
-using Moq;
-using System.Net;
-using Tickster.Api;
-using Tickster.Api.Test.Utils;
+﻿using Tickster.Api.Dtos;
 
 namespace Tickster.Api.Test.Unit;
 public class TestTicksterHttpAgent : MockHttpClientBase
@@ -105,5 +101,32 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         Assert.NotNull(rateLimit.FirstRequestAtUtc);
         Assert.InRange((DateTime)rateLimit.LastRequestAtUtc, now.AddSeconds(-1), now.AddSeconds(1));
         Assert.InRange((DateTime)rateLimit.FirstRequestAtUtc, now.AddSeconds(-1), now.AddSeconds(1));
+    }
+
+    [Theory]
+    [InlineData("https://an.example.com", "first-endpoint", "1.0", "se", 10, 0)]
+    [InlineData("https://another.example.com", "second-endpoint", "2.0", "no", 20, 10)]
+    [InlineData("https://onemore.example.com", "third-endpoint", "3.0", "dk", 5, 7)]
+    public async Task MakeApiRequest_BuildsRequestUrl(string baseUrl, 
+        string endpoint, 
+        string version, 
+        string lang, 
+        int take, 
+        int skip)
+    {
+        // Arrange
+        RequestCallback = (request, cancel) =>
+        {
+            // Assert
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal($"{baseUrl}/api/v{version}/{lang}/{endpoint}?take={take}&skip={skip}", request.RequestUri?.ToString());
+        };
+
+        SetupMockResponse();
+
+        var pagination = new Pagination { Take = take, Skip = skip };
+
+        // Act
+        await Agent.MakeApiRequest($"{baseUrl}", endpoint, version, lang, pagination);
     }
 }
