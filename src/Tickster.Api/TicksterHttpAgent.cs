@@ -14,14 +14,15 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
     public RateLimitInfo RateLimitInfo { get; private set; } = new();
 
     public async Task<string> MakeApiRequest(
-        string baseUrl, 
+        string subDomain, 
         string endpoint, 
         string version, 
         string lang,
         Pagination? pagination = null)
     {
-        var requestUrl = new UriBuilder(baseUrl)
+        var requestUrl = new UriBuilder(client.BaseAddress!)
         {
+            Host = $"{subDomain}.{client.BaseAddress!.Host}",
             Path = $"api/v{version}/{lang}/{endpoint}"
         };
 
@@ -45,7 +46,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
             throw new InvalidOperationException("EOG request code is not set.");
         }
 
-        var crmRequestUrl = new UriBuilder(HttpClient.BaseAddress!)
+        var crmRequestUrl = new UriBuilder(client.BaseAddress!)
         {
             Path = $"{lang}/api/0.4/crm/{_eogRequestCode}",
             Query = $"key={GetApiKey()}"

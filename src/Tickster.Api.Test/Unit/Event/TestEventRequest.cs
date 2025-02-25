@@ -32,7 +32,7 @@ public class TestEventRequest : MockAgentBase
         await TicksterClient.Event(id, version, lang);
 
         // Assert
-        MockAgent.Verify(c => c.MakeApiRequest(TicksterOptions.EventBaseUrl, $"events/{id}", version, lang, It.IsAny<Pagination>()), Times.Once);
+        MockAgent.Verify(c => c.MakeApiRequest("event", $"events/{id}", version, lang, It.IsAny<Pagination>()), Times.Once);
     }
 
     [Fact]

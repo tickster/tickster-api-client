@@ -15,8 +15,7 @@ public abstract class MockAgentBase
         var options = Options.Create(new TicksterOptions
         {
             ApiKey = "test",
-            CrmBaseUrl = "https://test.com",
-            EventBaseUrl = "https://event.test.com",
+            ApiBaseUrl = "https://test.com",
             DefaultLanguage = "sv",
             DefaultResultLimit = 500,
             EogRequestCode = "test",

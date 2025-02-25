@@ -61,6 +61,6 @@ public class TestEventsRequest : MockAgentBase
         var result = await TicksterClient.Events(version: version, lang: lang);
 
         // Assert
-        MockAgent.Verify(c => c.MakeApiRequest(TicksterOptions.EventBaseUrl, "events", version, lang, It.IsAny<Pagination>()), Times.Once);
+        MockAgent.Verify(c => c.MakeApiRequest("event", "events", version, lang, It.IsAny<Pagination>()), Times.Once);
     }
 }

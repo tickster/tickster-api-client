@@ -6,13 +6,13 @@ using Tickster.Api.Dtos;
 using Tickster.Api.Models;
 using Event = Tickster.Api.Models.Event.Event;
 using Tickster.Api.Models.Event;
-using System;
 
 namespace Tickster.Api;
 
 public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgent agent)
 {
     private readonly TicksterOptions _options = options.Value;
+    private const string eventSubDomain = "event";
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -59,7 +59,7 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         lang ??= _options.DefaultLanguage;
 
         var json = await Agent.MakeApiRequest(
-            baseUrl: _options.EventBaseUrl,
+            subDomain: eventSubDomain,
             endpoint: $"events/{id}",
             version:  version,
             lang: lang
@@ -77,7 +77,7 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         pagination ??= new() { Skip = 0, Take = _options.DefaultResultLimit };
 
         var json = await Agent.MakeApiRequest(
-            baseUrl: _options.EventBaseUrl,
+            subDomain: eventSubDomain,
             endpoint: "events",
             version: version,
             lang: lang,
