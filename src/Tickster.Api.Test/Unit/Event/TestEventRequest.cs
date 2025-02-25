@@ -10,7 +10,7 @@ public class TestEventRequest : MockAgentBase
     public async Task Event_ShouldUseDefaultValuesIfNull()
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
         await TicksterClient.Event("4ny1d");
@@ -20,26 +20,26 @@ public class TestEventRequest : MockAgentBase
     }    
 
     [Theory]
-    [InlineData("1234", "1.0", "se")]
-    [InlineData("4321", "0.7", "dk")]
-    [InlineData("4132", "10.0", "no")]
-    public async Task Event_CallsRequestWithExpectedParams(string id, string version, string lang)
+    [InlineData("1234", "se")]
+    [InlineData("4321", "dk")]
+    [InlineData("4132", "no")]
+    public async Task Event_CallsRequestWithExpectedParams(string id, string lang)
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
-        await TicksterClient.Event(id, version, lang);
+        await TicksterClient.Event(id, lang);
 
         // Assert
-        MockAgent.Verify(c => c.MakeApiRequest("event", $"events/{id}", version, lang, It.IsAny<Pagination>()), Times.Once);
+        MockAgent.Verify(c => c.MakeApiRequest("event", $"events/{id}", TicksterOptions.DefaultApiVersion, lang, It.IsAny<Pagination>()), Times.Once);
     }
 
     [Fact]
     public async Task Event_ReturnsEvent()
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
         var result = await TicksterClient.Event("4ny1d");

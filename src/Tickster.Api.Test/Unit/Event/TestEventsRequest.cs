@@ -49,18 +49,18 @@ public class TestEventsRequest : MockAgentBase
     }
 
     [Theory]
-    [InlineData("1.0", "se")]
-    [InlineData("0.7", "dk")]
-    [InlineData("10.0", "no")]
-    public async Task Events_CallsRequestWithExpectedParams(string version, string lang)
+    [InlineData("se")]
+    [InlineData("dk")]
+    [InlineData("no")]
+    public async Task Events_CallsRequestWithExpectedParams(string lang)
     {
         // Arrange
         SetupMockResponse("events-empty.json");
 
         // Act
-        var result = await TicksterClient.Events(version: version, lang: lang);
+        var result = await TicksterClient.Events(lang: lang);
 
         // Assert
-        MockAgent.Verify(c => c.MakeApiRequest("event", "events", version, lang, It.IsAny<Pagination>()), Times.Once);
+        MockAgent.Verify(c => c.MakeApiRequest("event", "events", TicksterOptions.DefaultApiVersion, lang, It.IsAny<Pagination>()), Times.Once);
     }
 }
