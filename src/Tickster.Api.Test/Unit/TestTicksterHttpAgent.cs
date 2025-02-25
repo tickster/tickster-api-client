@@ -104,10 +104,10 @@ public class TestTicksterHttpAgent : MockHttpClientBase
     }
 
     [Theory]
-    [InlineData("an.example.com", "first-endpoint", "1.0", "se", 10, 0)]
-    [InlineData("another.example.com", "second-endpoint", "2.0", "no", 20, 10)]
-    [InlineData("onemore.example.com", "third-endpoint", "3.0", "dk", 5, 7)]
-    public async Task MakeApiRequest_BuildsRequestUrl(string host, 
+    [InlineData("event", "first-endpoint", "1.0", "se", 10, 0)]
+    [InlineData("events", "second-endpoint", "2.0", "no", 20, 10)]
+    [InlineData("organizer", "third-endpoint", "3.0", "dk", 5, 7)]
+    public async Task MakeApiRequest_BuildsRequestUrl(string subDomain, 
         string endpoint, 
         string version, 
         string lang, 
@@ -119,7 +119,7 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         {
             // Assert
             Assert.Equal(HttpMethod.Get, request.Method);
-            Assert.Equal(host, request.RequestUri!.Host);
+            Assert.Equal($"{subDomain}.{Agent.HttpClient.BaseAddress!.Host}", request.RequestUri!.Host);
 
             Assert.Equal($"/api/v{version}/{lang}/{endpoint}", request.RequestUri!.AbsolutePath);
 
@@ -131,6 +131,6 @@ public class TestTicksterHttpAgent : MockHttpClientBase
         SetupMockResponse();
 
         // Act
-        await Agent.MakeApiRequest($"https://{host}", endpoint, version, lang, new () { Take = take, Skip = skip });
+        await Agent.MakeApiRequest(subDomain, endpoint, version, lang, new () { Take = take, Skip = skip });
     }
 }

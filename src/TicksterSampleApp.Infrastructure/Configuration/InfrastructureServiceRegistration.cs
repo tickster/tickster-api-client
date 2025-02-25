@@ -20,7 +20,7 @@ public static class InfrastructureServiceRegistration
 
         services.AddTicksterClient(clientOptions =>
         {            
-            clientOptions.CrmBaseUrl = crmConfig!.Endpoint;
+            clientOptions.ApiBaseUrl = crmConfig!.Endpoint;
             clientOptions.ApiKey = crmConfig!.ApiKey;
             clientOptions.EogRequestCode = crmConfig!.EogRequestCode;
             clientOptions.Login = crmConfig!.Login;

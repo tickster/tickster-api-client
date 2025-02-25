@@ -12,7 +12,6 @@ public class TestClientUsage
         var services = new ServiceCollection();
         services.AddTicksterClient(options =>
         {
-            options.CrmBaseUrl = "https://api.tickster.com";
             options.ApiKey = "test-api-key";
         });
 
@@ -23,7 +22,6 @@ public class TestClientUsage
 
         // Assert
         Assert.NotNull(apiClient);
-        Assert.Equal("https://api.tickster.com/", apiClient.Agent.HttpClient.BaseAddress?.ToString());
     }
 
     [Fact]
@@ -32,7 +30,6 @@ public class TestClientUsage
         // Arrange
         var options = new TicksterOptions
         {
-            CrmBaseUrl = "https://api.tickster.com",
             ApiKey = "test-api-key"
         };
 
@@ -43,6 +40,5 @@ public class TestClientUsage
 
         // Assert
         Assert.NotNull(apiClient);
-        Assert.Equal("https://api.tickster.com/", apiClient.Agent.HttpClient.BaseAddress?.ToString());
     }
 }

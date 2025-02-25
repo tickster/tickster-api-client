@@ -2,8 +2,7 @@
 
 public class TicksterOptions
 {
-    public string CrmBaseUrl { get; set; } = "https://api.tickster.com";
-    public string EventBaseUrl { get; set; } = "https://event.api.tickster.com";
+    public string ApiBaseUrl { get; set; } = "https://api.tickster.com";
     public string ApiKey { get; set; } = string.Empty;
     public string Login { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
