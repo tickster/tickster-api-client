@@ -13,6 +13,22 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
 
     public RateLimitInfo RateLimitInfo { get; private set; } = new();
 
+    public async Task<string> MakeApiRequest(
+        string baseUrl, 
+        string endpoint, 
+        string version, 
+        string lang,
+        Pagination pagination)
+    {
+        var requestUrl = new UriBuilder(baseUrl)
+        {
+            Path = $"api/v{version}/{lang}/{endpoint}",
+            Query = BuildPaginationQueryString(pagination)
+        };
+
+        return await MakeRequest(requestUrl.ToString());
+    }
+
     public async Task<string> MakeCrmRequest(
         string endpoint, 
         int fromPurchase, 
@@ -150,4 +166,7 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
             Title = response.Error,
             Status = (int?)e.StatusCode ?? 0
         };
+
+    private static string BuildPaginationQueryString(Pagination pagination)
+        => $"take={pagination.Take}&skip={pagination.Skip}";
 }
