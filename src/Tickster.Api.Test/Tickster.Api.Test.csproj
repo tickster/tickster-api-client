@@ -48,6 +48,9 @@
     <None Update="TestResponses\crm-restaurant-id-as-string.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestResponses\event-empty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestResponses\event-ok.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -55,6 +58,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestResponses\organizer-ok.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestResponses\organizers-ok.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

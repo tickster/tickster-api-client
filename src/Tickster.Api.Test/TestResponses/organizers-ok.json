@@ -1,0 +1,34 @@
+﻿[
+  {
+    "id": "abc123xyz789",
+    "name": "The Loft Venue",
+    "_links": [
+      {
+        "rel": "self",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/abc123xyz789",
+        "method": "GET"
+      },
+      {
+        "rel": "events",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/abc123xyz789/events",
+        "method": "GET"
+      }
+    ]
+  },
+  {
+    "id": "def456uvw321",
+    "name": "Five Peaks Brewery",
+    "_links": [
+      {
+        "rel": "self",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/def456uvw321",
+        "method": "GET"
+      },
+      {
+        "rel": "events",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/def456uvw321/events",
+        "method": "GET"
+      }
+    ]
+  }
+]
