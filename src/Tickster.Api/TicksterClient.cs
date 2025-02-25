@@ -74,7 +74,7 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
     {
         version ??= _options.DefaultApiVersion;
         lang ??= _options.DefaultLanguage;
-        pagination ??= new();
+        pagination ??= new() { Skip = 0, Take = _options.DefaultResultLimit };
 
         var json = await Agent.MakeApiRequest(
             baseUrl: _options.EventBaseUrl,
