@@ -53,15 +53,14 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         GetCrmPurchasesOptions? options = null)
         => await GetCrmPurchasesAtId(purchaseId + 1, limit, lang, options);
 
-    public async Task<Event> Event(string id, string? version = null, string? lang = null)
+    public async Task<Event> Event(string id, string? lang = null)
     {
-        version ??= _options.DefaultApiVersion;
         lang ??= _options.DefaultLanguage;
 
         var json = await Agent.MakeApiRequest(
             subDomain: eventSubDomain,
             endpoint: $"events/{id}",
-            version:  version,
+            version: _options.DefaultApiVersion,
             lang: lang
             );
 
@@ -70,16 +69,15 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         return eventResponse;
     }
 
-    public async Task<EventSummaryResourceCollection> Events(string? version = null, string? lang = null, Pagination? pagination = null)
+    public async Task<EventSummaryResourceCollection> Events(string? lang = null, Pagination? pagination = null)
     {
-        version ??= _options.DefaultApiVersion;
         lang ??= _options.DefaultLanguage;
         pagination ??= new() { Skip = 0, Take = _options.DefaultResultLimit };
 
         var json = await Agent.MakeApiRequest(
             subDomain: eventSubDomain,
             endpoint: "events",
-            version: version,
+            version: _options.DefaultApiVersion,
             lang: lang,
             pagination: pagination
             );
