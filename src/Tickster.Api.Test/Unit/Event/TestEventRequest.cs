@@ -32,7 +32,7 @@ public class TestEventRequest : MockAgentBase
         await TicksterClient.Event(id, version, lang);
 
         // Assert
-        MockAgent.Verify(c => c.MakeApiRequest(It.IsAny<string>(), $"events/{id}", version, lang, It.IsAny<Pagination>()), Times.Once);
+        MockAgent.Verify(c => c.MakeApiRequest(TicksterOptions.EventBaseUrl, $"events/{id}", version, lang, It.IsAny<Pagination>()), Times.Once);
     }
 
     [Fact]
@@ -44,6 +44,7 @@ public class TestEventRequest : MockAgentBase
         // Act
         var result = await TicksterClient.Event("4ny1d");
 
+        // Assert
         Assert.IsType<EventModel>(result);
     }
 }

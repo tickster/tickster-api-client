@@ -5,6 +5,8 @@ using System.Text.Json.Serialization;
 using Tickster.Api.Dtos;
 using Tickster.Api.Models;
 using Event = Tickster.Api.Models.Event.Event;
+using Tickster.Api.Models.Event;
+using System;
 
 namespace Tickster.Api;
 
@@ -66,6 +68,25 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         var eventResponse = ParseJsonResponse<Event>(json);
 
         return eventResponse;
+    }
+
+    public async Task<EventSummaryResourceCollection> Events(string? version = null, string? lang = null, Pagination? pagination = null)
+    {
+        version ??= _options.DefaultApiVersion;
+        lang ??= _options.DefaultLanguage;
+        pagination ??= new() { Skip = 0, Take = _options.DefaultResultLimit };
+
+        var json = await Agent.MakeApiRequest(
+            baseUrl: _options.EventBaseUrl,
+            endpoint: "events",
+            version: version,
+            lang: lang,
+            pagination: pagination
+            );
+
+        var eventsResponse = ParseJsonResponse<EventSummaryResourceCollection>(json);
+
+        return eventsResponse;
     }
 
     private T ParseJsonResponse<T>(string json)
