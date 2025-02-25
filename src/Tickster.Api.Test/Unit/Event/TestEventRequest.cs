@@ -10,7 +10,7 @@ public class TestEventRequest : MockAgentBase
     public async Task Event_ShouldUseDefaultValuesIfNull()
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
         await TicksterClient.Event("4ny1d");
@@ -26,7 +26,7 @@ public class TestEventRequest : MockAgentBase
     public async Task Event_CallsRequestWithExpectedParams(string id, string lang)
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
         await TicksterClient.Event(id, lang);
@@ -39,7 +39,7 @@ public class TestEventRequest : MockAgentBase
     public async Task Event_ReturnsEvent()
     {
         // Arrange
-        SetupMockResponse("event-empty.json");
+        SetupMockResponse("event-ok.json");
 
         // Act
         var result = await TicksterClient.Event("4ny1d");
