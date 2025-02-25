@@ -89,6 +89,22 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         return eventsResponse;
     }
 
+    public async Task<Organizer> Organizer(string id, string? lang = null)
+    {
+        lang ??= _options.DefaultLanguage;
+
+        var json = await Agent.MakeApiRequest(
+            subDomain: eventSubDomain,
+            endpoint: $"organizers/{id}",
+            version: _options.DefaultApiVersion,
+            lang: lang
+            );
+
+        var organizerResponse = ParseJsonResponse<Organizer>(json);
+
+        return organizerResponse;
+    }
+
     private T ParseJsonResponse<T>(string json)
         => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions)!;
 

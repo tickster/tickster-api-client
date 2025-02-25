@@ -1,0 +1,25 @@
+﻿{
+  "id": "abc123xyz789",
+  "name": "The Event Masters",
+  "website": "https://www.eventmasters.com/",
+  "email": "contact@eventmasters.com",
+  "organizationalId": "987654-4321",
+  "segmentName": "festivalorconference",
+  "address": [
+    "Main Avenue 42",
+    "543 21 Metropolis"
+  ],
+  "socialMedia": {
+    "facebook": "https://www.facebook.com/eventmasters",
+    "twitter": "https://twitter.com/eventmasters"
+  },
+  "defaultLanguage": "en",
+  "country": "us",
+  "_links": [
+    {
+      "rel": "next",
+      "href": "https://event.api.example.com/api/v1.0/en/events/search?skip=20",
+      "method": "GET"
+    }
+  ]
+}

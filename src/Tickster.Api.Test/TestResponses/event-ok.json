@@ -1,0 +1,111 @@
+﻿{
+  "id": "xyz789abc123",
+  "name": "GIFT CARD - GRAND CITY THEATER",
+  "description": {
+    "markdown": "**Gift card valid for ticket purchases for events at the theater. The gift cards are available in denominations of 50, 150, 250, 500, and 750 dollars. You can buy one or multiple gift cards.**\r\n\r\nTicket prices vary. If you want to match the gift card value to a specific event, check the event page online for pricing details.\r\n\r\nGift cards are valid for two years and can be used when purchasing tickets online or at the box office.\r\n\r\nWhen purchasing gift cards online, you receive them instantly as a printable PDF.\r\n\r\nWelcome to Grand City Theater!",
+    "html": "<p><strong>Gift card valid for ticket purchases for events at the theater. The gift cards are available in denominations of 50, 150, 250, 500, and 750 dollars. You can buy one or multiple gift cards.</strong></p>\n<p>Ticket prices vary. If you want to match the gift card value to a specific event, check the event page online for pricing details.</p>\n<p>Gift cards are valid for two years and can be used when purchasing tickets online or at the box office.</p>\n<p>When purchasing gift cards online, you receive them instantly as a printable PDF.</p>\n<p>Welcome to Grand City Theater!</p>\n"
+  },
+  "ageLimit": "",
+  "duration": "",
+  "accessibilityInfo": "",
+  "startUtc": "2000-01-01T12:00:00Z",
+  "endUtc": "2100-12-31T23:59:00Z",
+  "doorsOpenUtc": "2000-01-01T12:00:00Z",
+  "curfewUtc": "2025-12-31T22:00:00Z",
+  "lastUpdatedUtc": "2025-02-16T18:20:52.857Z",
+  "state": "releasedForSale",
+  "stockLevel": "unknown",
+  "imageUrl": "https://static.example.com/fake-image.jpg",
+  "infoUrl": "https://www.example.com/events/xyz789abc123",
+  "shopUrl": "https://secure.example.com/xyz789abc123",
+  "localizedShopUrls": {
+    "en": "https://secure.example.com/en/xyz789abc123",
+    "es": "https://secure.example.com/es/xyz789abc123",
+    "fr": "https://secure.example.com/fr/xyz789abc123",
+    "de": "https://secure.example.com/de/xyz789abc123"
+  },
+  "eventHierarchyType": "event",
+  "parentEventId": null,
+  "organizer": {
+    "defaultLanguage": "en",
+    "country": "us",
+    "id": "org567xyz123",
+    "name": "Grand City Events",
+    "_links": [
+      {
+        "rel": "self",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/org567xyz123",
+        "method": "GET"
+      },
+      {
+        "rel": "events",
+        "href": "https://event.api.example.com/api/v1.0/en/organizers/org567xyz123/events",
+        "method": "GET"
+      }
+    ]
+  },
+  "venue": {
+    "id": "venue123abc456",
+    "name": "Grand City Theater",
+    "address": "123 Broadway Ave",
+    "zipCode": "10001",
+    "city": "Metropolis",
+    "country": "US",
+    "geo": {
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  "performers": [],
+  "spotifyArtists": [],
+  "webLinks": [],
+  "tags": [
+    "Grand City",
+    "Grand City Theater",
+    "support-your-venue",
+    "event-schedule-updated"
+  ],
+  "products": [
+    {
+      "name": "Gift Card - 50 USD",
+      "productType": "giftcertificate",
+      "description": "",
+      "mainImageUrl": "",
+      "price": null,
+      "variants": null
+    },
+    {
+      "name": "Gift Card - 750 USD",
+      "productType": "giftcertificate",
+      "description": "",
+      "mainImageUrl": "",
+      "price": null,
+      "variants": null
+    },
+    {
+      "name": "Gift Card - 150 USD",
+      "productType": "giftcertificate",
+      "description": "",
+      "mainImageUrl": "",
+      "price": null,
+      "variants": null
+    },
+    {
+      "name": "Gift Card - 250 USD",
+      "productType": "giftcertificate",
+      "description": "",
+      "mainImageUrl": "",
+      "price": null,
+      "variants": null
+    },
+    {
+      "name": "Gift Card - 500 USD",
+      "productType": "giftcertificate",
+      "description": "",
+      "mainImageUrl": "",
+      "price": null,
+      "variants": null
+    }
+  ],
+  "childEvents": null
+}
