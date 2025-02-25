@@ -1,5 +1,4 @@
 ﻿using System.Web;
-using Tickster.Api.Dtos;
 
 namespace Tickster.Api.Test.Unit;
 public class TestTicksterHttpAgent : MockHttpClientBase

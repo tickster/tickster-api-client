@@ -18,13 +18,17 @@ public class TicksterHttpAgent(HttpClient client, string? eogRequestCode = null)
         string endpoint, 
         string version, 
         string lang,
-        Pagination pagination)
+        Pagination? pagination = null)
     {
         var requestUrl = new UriBuilder(baseUrl)
         {
-            Path = $"api/v{version}/{lang}/{endpoint}",
-            Query = BuildPaginationQueryString(pagination)
+            Path = $"api/v{version}/{lang}/{endpoint}"
         };
+
+        if (pagination != null)
+        {
+            requestUrl.Query += BuildPaginationQueryString(pagination);
+        }
 
         return await MakeRequest(requestUrl.ToString());
     }

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Tickster.Api.Extensions;
 
@@ -13,7 +12,7 @@ public class TestClientUsage
         var services = new ServiceCollection();
         services.AddTicksterClient(options =>
         {
-            options.Endpoint = "https://api.tickster.com";
+            options.CrmBaseUrl = "https://api.tickster.com";
             options.ApiKey = "test-api-key";
         });
 
@@ -33,7 +32,7 @@ public class TestClientUsage
         // Arrange
         var options = new TicksterOptions
         {
-            Endpoint = "https://api.tickster.com",
+            CrmBaseUrl = "https://api.tickster.com",
             ApiKey = "test-api-key"
         };
 

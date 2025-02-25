@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Moq;
+using Tickster.Api.Dtos;
 using Tickster.Api.Test.Utils;
 
 namespace Tickster.Api.Test;
@@ -14,12 +15,14 @@ public abstract class MockAgentBase
         var options = Options.Create(new TicksterOptions
         {
             ApiKey = "test",
-            Endpoint = "https://test.com",
+            CrmBaseUrl = "https://test.com",
+            EventBaseUrl = "https://event.test.com",
             DefaultLanguage = "sv",
             DefaultResultLimit = 500,
             EogRequestCode = "test",
             Login = "test",
-            Password = "test"
+            Password = "test",
+            DefaultApiVersion = "1.0"
         });
 
         TicksterOptions = options.Value;
@@ -28,12 +31,21 @@ public abstract class MockAgentBase
         TicksterClient = new TicksterClient(options, MockAgent.Object);
     }
 
-    protected void SetupMockResponse(string fileName)
+    protected void SetupCrmMockResponse(string fileName)
     {
         var rawJson = TestFileUtils.GetTestFileContent(fileName);
         
         MockAgent
             .Setup(a => a.MakeCrmRequest(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<bool>()))
+            .ReturnsAsync(rawJson);
+    }
+
+    protected void SetupMockResponse(string fileName)
+    {
+        var rawJson = TestFileUtils.GetTestFileContent(fileName);
+
+        MockAgent
+            .Setup(a => a.MakeApiRequest(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Pagination>()))
             .ReturnsAsync(rawJson);
     }
 }

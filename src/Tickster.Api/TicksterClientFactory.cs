@@ -12,7 +12,7 @@ public class TicksterClientFactory(IOptions<TicksterOptions> options)
     {
         var httpClient = httpClientFactory();
 
-        httpClient.BaseAddress = new Uri(_options.Endpoint);
+        httpClient.BaseAddress = new Uri(_options.CrmBaseUrl);
         if (!string.IsNullOrEmpty(_options.ApiKey))
         {
             var encodedAuth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_options.Login}:{_options.Password}"));

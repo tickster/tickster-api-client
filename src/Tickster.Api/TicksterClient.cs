@@ -4,6 +4,7 @@ using Tickster.Api.Models.Crm;
 using System.Text.Json.Serialization;
 using Tickster.Api.Dtos;
 using Tickster.Api.Models;
+using Event = Tickster.Api.Models.Event.Event;
 
 namespace Tickster.Api;
 
@@ -49,6 +50,23 @@ public class TicksterClient(IOptions<TicksterOptions> options, ITicksterHttpAgen
         string? lang = null,
         GetCrmPurchasesOptions? options = null)
         => await GetCrmPurchasesAtId(purchaseId + 1, limit, lang, options);
+
+    public async Task<Event> Event(string id, string? version = null, string? lang = null)
+    {
+        version ??= _options.DefaultApiVersion;
+        lang ??= _options.DefaultLanguage;
+
+        var json = await Agent.MakeApiRequest(
+            baseUrl: _options.EventBaseUrl,
+            endpoint: $"events/{id}",
+            version:  version,
+            lang: lang
+            );
+
+        var eventResponse = ParseJsonResponse<Event>(json);
+
+        return eventResponse;
+    }
 
     private T ParseJsonResponse<T>(string json)
         => JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions)!;

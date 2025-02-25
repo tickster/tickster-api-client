@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Moq;
+﻿using Moq;
 
 namespace Tickster.Api.Test.Unit.Crm;
 public class TestCrmOptions : MockAgentBase
@@ -10,7 +9,7 @@ public class TestCrmOptions : MockAgentBase
 
         // Arrange
         var purchaseId = 123;
-        SetupMockResponse("crm-purchases-ok.json");
+        SetupCrmMockResponse("crm-purchases-ok.json");
 
         // Act
         await TicksterClient.GetCrmPurchasesAtId(purchaseId);
@@ -26,7 +25,7 @@ public class TestCrmOptions : MockAgentBase
         // Arrange
         var purchaseId = 123;
         var options = new GetCrmPurchasesOptions { IncludeAllAccounts = false };
-        SetupMockResponse("crm-purchases-ok.json");
+        SetupCrmMockResponse("crm-purchases-ok.json");
 
         // Act
         await TicksterClient.GetCrmPurchasesAtId(purchaseId, options: options);
@@ -40,7 +39,7 @@ public class TestCrmOptions : MockAgentBase
     {
         // Arrange
         var purchaseId = 123;
-        SetupMockResponse("crm-purchases-unsynced-refund.json");
+        SetupCrmMockResponse("crm-purchases-unsynced-refund.json");
         // Act
         var result = await TicksterClient.GetCrmPurchasesAtId(purchaseId);
         // Assert
@@ -53,7 +52,7 @@ public class TestCrmOptions : MockAgentBase
         // Arrange
         var purchaseId = 123;
         var options = new GetCrmPurchasesOptions { SuppressUnsyncedRefunds = false };
-        SetupMockResponse("crm-purchases-unsynced-refund.json");
+        SetupCrmMockResponse("crm-purchases-unsynced-refund.json");
         // Act
         var result = await TicksterClient.GetCrmPurchasesAtId(purchaseId, options: options);
         // Assert

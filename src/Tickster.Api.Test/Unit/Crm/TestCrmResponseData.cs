@@ -1,4 +1,5 @@
 ﻿using Tickster.Api.Models.Crm;
+using CrmEvent = Tickster.Api.Models.Crm.Event;
 
 namespace Tickster.Api.Test.Unit.Crm;
 public class TestCrmResponseData : MockAgentBase
@@ -7,7 +8,7 @@ public class TestCrmResponseData : MockAgentBase
     public async Task GetCrmPurchasesAtId_ValidateResponse()
     {
         // Arrange
-        SetupMockResponse("crm-purchases-ok.json");
+        SetupCrmMockResponse("crm-purchases-ok.json");
 
         // Act
 
@@ -54,7 +55,7 @@ public class TestCrmResponseData : MockAgentBase
 
         Assert.Empty(purchase.Campaigns);
 
-        Assert.IsType<List<Event>>(purchase.Events);
+        Assert.IsType<List<CrmEvent>>(purchase.Events);
         Assert.Equal(2, purchase.Events.Count);
 
         var firstEvent = purchase.Events.First();
@@ -137,7 +138,7 @@ public class TestCrmResponseData : MockAgentBase
     [InlineData("crm-restaurant-id-as-null.json", null)]
     public async Task GetCrmPurchasesAtId_EventRestaurantIdFormats(string testFile, int? expectedId)
     {
-        SetupMockResponse(testFile);
+        SetupCrmMockResponse(testFile);
         var result = await TicksterClient.GetCrmPurchasesAtId(1);
         var item = result.FirstOrDefault()?.Goods?.FirstOrDefault();
 
@@ -149,7 +150,7 @@ public class TestCrmResponseData : MockAgentBase
     public async Task GetCrmPurchasesAtId_TestEmptyResponse()
     {
         // Arrange
-        SetupMockResponse("crm-purchases-empty.json");
+        SetupCrmMockResponse("crm-purchases-empty.json");
 
         // Act
         var result = await TicksterClient.GetCrmPurchasesAtId(1);
